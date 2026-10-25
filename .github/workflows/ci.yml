@@ -51,78 +51,81 @@ jobs:
           python -m http.server 8080 --bind 127.0.0.1 >/dev/null 2>&1 &
           sleep 2
 
-      # Chrome sürümü sabitlenir: Lighthouse 12.6 + sistem Chrome (155) NO_FCP hatası veriyor.
       - name: Sabit Chrome kur
         id: chrome
         uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: "140"
 
-      - name: Chrome sürümü
-        run: "${{ steps.chrome.outputs.chrome-path }} --version"
+      - name: Chrome yolunu tüm adımlara aktar
+        run: echo "CHROME_PATH=${{ steps.chrome.outputs.chrome-path }}" >> "$GITHUB_ENV"
 
-      # Lighthouse'ın bu ortamda gerçekten çalıştığını doğrulamak için düz bir örnek sayfa
-      - name: Örnek sağlık sayfası oluştur
-        run: printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH saglik kontrolu</title></head><body><h1>Lighthouse saglik kontrolu</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html && ls -l _lh_test.html
-
-      # Kök neden ayrıştırma: her varyant bağımsız çalışır (ilki patlayınca durmaz)
-      - name: "TANILAMA varyantlar"
+      - name: Varyant sayfaları oluştur
         run: |
-          set +e
-          # V1: script.js yok
+          printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH kontrol</title></head><body><h1>Kontrol sayfasi</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html
           sed 's#<script src="script.js"></script>##' index.html > _v1.html
-          # V2: reveal gizlemesi kapatıldı
           sed 's#</head>#<style>.reveal,.stats div{opacity:1!important;transform:none!important}</style></head>#' index.html > _v2.html
-          # V3: tüm filtreler kapalı (blur / backdrop-filter)
           sed 's#</head>#<style>*{filter:none!important;backdrop-filter:none!important}</style></head>#' index.html > _v3.html
-          # V4: tüm animasyon/transition kapalı
           sed 's#</head>#<style>*{animation:none!important;transition:none!important}</style></head>#' index.html > _v4.html
-          # V5: styles.css hiç yüklenmiyor
           sed 's#<link rel="stylesheet" href="styles.css">##' index.html > _v5.html
-          printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH kontrol</title></head><body><h1>Kontrol sayfasi</h1></body></html>' > _lh_test.html
+          ls -l _lh_test.html _v1.html _v2.html _v3.html _v4.html _v5.html
 
-          echo "npx: $(command -v npx || echo YOK)"
-          echo "lighthouse global: $(command -v lighthouse || echo YOK)"
-
-          kontrol() {
-            local ad="$1"
-            local ek="${2:-}"
-            npx --yes lighthouse@12 "http://127.0.0.1:8080/$ad.html" --only-categories=seo --quiet \
-              --chrome-flags="--no-sandbox --disable-gpu --disable-dev-shm-usage $ek" \
-              --output=json --output-path="/tmp/$ad.json" > "/tmp/$ad.log" 2>&1
-            local kod=$?
-            local son
-            son=$(tail -n 1 "/tmp/$ad.log")
-            python3 - "$ad" "$kod" "$son" <<'PY'
-          import json, sys
-          ad, kod, son = sys.argv[1], sys.argv[2], sys.argv[3]
-          try:
-              d = json.load(open(f"/tmp/{ad}.json"))
-              e = d.get("runtimeError")
-              durum = ("HATA " + e["code"]) if e else "GECTI"
-          except Exception as ex:
-              durum = f"DOSYA YOK ({ex})"
-          print(f"{ad:10} cikis={kod:>3}  {durum}   | {son[:90]}")
-          PY
-          }
-
-          kontrol _lh_test
-          kontrol _v1
-          kontrol _v2
-          kontrol _v3
-          kontrol _v4
-          kontrol _v5
-          kontrol index
-          kontrol index "--window-size=1350,940"
-          kontrol dil
-          kontrol 404
-          echo "TANILAMA BITTI"
-
-      - name: Lighthouse CI
+      # Her varyant kendi adımında koşar: ilki patlasa da diğerleri çalışır
+      - name: "T1 kontrol"
+        id: t1
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
-        env:
-          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         with:
-          configPath: ./lighthouserc.json
-          uploadArtifacts: true
+          urls: http://127.0.0.1:8080/_lh_test.html
+
+      - name: "V1 script yok"
+        id: v1
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: http://127.0.0.1:8080/_v1.html
+
+      - name: "V2 reveal kapali"
+        id: v2
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: http://127.0.0.1:8080/_v2.html
+
+      - name: "V3 filtre yok"
+        id: v3
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: http://127.0.0.1:8080/_v3.html
+
+      - name: "V4 animasyon yok"
+        id: v4
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: http://127.0.0.1:8080/_v4.html
+
+      - name: "V5 css yok"
+        id: v5
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: http://127.0.0.1:8080/_v5.html
+
+      - name: "P1 index"
+        id: p1
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: http://127.0.0.1:8080/index.html
+
+      - name: "VARYANT SONUCLARI"
+        run: |
+          echo "T1 kontrol   : ${{ steps.t1.outcome }}"
+          echo "V1 script yok: ${{ steps.v1.outcome }}"
+          echo "V2 reveal yok: ${{ steps.v2.outcome }}"
+          echo "V3 filtre yok: ${{ steps.v3.outcome }}"
+          echo "V4 anim yok  : ${{ steps.v4.outcome }}"
+          echo "V5 css yok   : ${{ steps.v5.outcome }}"
+          echo "P1 index     : ${{ steps.p1.outcome }}"
