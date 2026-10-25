@@ -51,6 +51,8 @@ jobs:
           python -m http.server 8080 --bind 127.0.0.1 >/dev/null 2>&1 &
           sleep 2
 
+      # Chrome sürümü sabitlenir: Lighthouse ile sistemin yeni Chrome'u
+      # arasında uyumsuzluk çıkma ihtimaline karşı bilinen iyi çalışan sürüm.
       - name: Sabit Chrome kur
         id: chrome
         uses: browser-actions/setup-chrome@v2
@@ -60,74 +62,8 @@ jobs:
       - name: Chrome yolunu tüm adımlara aktar
         run: echo "CHROME_PATH=${{ steps.chrome.outputs.chrome-path }}" >> "$GITHUB_ENV"
 
-      - name: Varyant sayfaları oluştur
-        run: |
-          printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH kontrol</title></head><body><h1>Kontrol sayfasi</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html
-          python3 - <<'PY'
-          import re
-          s = open('index.html', encoding='utf-8').read()
-          # X1: sadece dil yonlendirme scripti silindi
-          x1 = re.sub(r'<script>\s*/\*[^<]*?location\.replace\("dil\.html"\);[^<]*?</script>', '', s, flags=re.S)
-          # X2: sadece JSON-LD silindi
-          x2 = re.sub(r'<script type="application/ld\+json">.*?</script>', '', s, flags=re.S)
-          open('_x1.html', 'w', encoding='utf-8').write(x1)
-          open('_x2.html', 'w', encoding='utf-8').write(x2)
-          print('x1 boyut', len(x1), '| x2 boyut', len(x2), '| orijinal', len(s))
-          PY
-          # X3: 404 giris animasyonu kapatildi
-          sed 's#</head>#<style>.enter{opacity:1!important;animation:none!important}</style></head>#' 404.html > _x3.html
-          # X4: 404 filtreleri kapatildi
-          sed 's#</head>#<style>*{filter:none!important;backdrop-filter:none!important}</style></head>#' 404.html > _x4.html
-          ls -l _x1.html _x2.html _x3.html _x4.html
-
-      # Her varyant kendi adımında koşar: ilki patlasa da diğerleri çalışır
-      - name: "T1 kontrol"
-        id: t1
-        continue-on-error: true
+      - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_lh_test.html
-
-      - name: "X1 yonlendirme yok"
-        id: x1
-        continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: http://127.0.0.1:8080/_x1.html
-
-      - name: "X2 jsonld yok"
-        id: x2
-        continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: http://127.0.0.1:8080/_x2.html
-
-      - name: "X3 404 animasyon yok"
-        id: x3
-        continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: http://127.0.0.1:8080/_x3.html
-
-      - name: "X4 404 filtre yok"
-        id: x4
-        continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: http://127.0.0.1:8080/_x4.html
-
-      - name: "P1 index"
-        id: p1
-        continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: http://127.0.0.1:8080/index.html
-
-      - name: "VARYANT SONUCLARI"
-        run: |
-          echo "T1 kontrol        : ${{ steps.t1.outcome }}"
-          echo "X1 yonlendirme yok: ${{ steps.x1.outcome }}"
-          echo "X2 jsonld yok     : ${{ steps.x2.outcome }}"
-          echo "X3 404 anim yok   : ${{ steps.x3.outcome }}"
-          echo "X4 404 filtre yok : ${{ steps.x4.outcome }}"
-          echo "P1 index          : ${{ steps.p1.outcome }}"
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true

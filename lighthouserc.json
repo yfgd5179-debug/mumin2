@@ -2,10 +2,6 @@
   "ci": {
     "collect": {
       "url": [
-        "http://127.0.0.1:8080/_v1.html",
-        "http://127.0.0.1:8080/_v2.html",
-        "http://127.0.0.1:8080/_v3.html",
-        "http://127.0.0.1:8080/_lh_test.html",
         "http://127.0.0.1:8080/index.html",
         "http://127.0.0.1:8080/dil.html",
         "http://127.0.0.1:8080/404.html"
