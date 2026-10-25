@@ -119,6 +119,12 @@ https://engmumin.work.gd/?lang=ar   ← Arapça açılır
 https://engmumin.work.gd/?lang=en   ← İngilizce açılır
 ```
 
+> **İlk ziyaret:** Ana sayfadan `dil.html`'e **yönlendirme yok** (yönlendirme hem ilk
+> boyayı engelliyordu hem de Google'ı `noindex` bir sayfaya gönderiyordu). Dil seçimi,
+> ana sayfanın üzerinde açılan katmanla (`#dilSec`) sorulur; seçim `localStorage`'a
+> yazılır, adres **değişmez**. Menüdeki "Dil" bağlantısı klasik seçim sayfasını
+> (`dil.html`) açmaya devam eder.
+
 ### 404 sayfası
 
 `404.html` — üç dilde "Sayfa bulunamadı" ekranı, ana sayfa/dil seçici butonları ve
@@ -138,6 +144,10 @@ bölüm bağlantılarıyla. GitHub Pages yanlış adreslerde otomatik gösterir.
 2. **Lighthouse CI** — `lighthouserc.json` eşikleri:
    erişilebilirlik / SEO / iyi uygulamalar ≥ **0.9** (hata), performans ≥ 0.7 (uyarı).
    Raporlar iş akışı artifacts'inde saklanır.
+   - `dil.html` ve `404.html` bilerek `noindex` olduğundan Lighthouse'un
+     `is-crawlable` denetimi bu ikisinde kasıtlı olarak düşüktür; `assertMatrix`
+     ile bu sayfalarda SEO eşiği 0.6'a çekilir (diğer denetimler tam puan).
+   - Chrome sürümü iş akışında **140**'a sabitlenir (Lighthouse ile uyumluluk).
 
 Yerelde de aynı denetimi çalıştırabilirsiniz:
 
