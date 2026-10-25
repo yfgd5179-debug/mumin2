@@ -20,7 +20,7 @@ site/
 | Kendi projeniz | `id="projeler"` içindeki `<article class="card">` |
 | Yetenek yüzdelikleri | `style="--v:92%"` değerleri |
 | E-posta | `href="mailto:..."` |
-| GitHub / Play / LinkedIn | `id="iletisim"` içindeki `.links` |
+| Telefon | `href="tel:+964..."` |
 | İstatistikler | `<dl class="stats">` |
 
 Yeni kart eklemek için mevcut `<article class="card">…</article>` bloğunu
