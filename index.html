@@ -24,9 +24,18 @@
 </head>
 <body>
 
+<div class="progress" id="progress" aria-hidden="true"></div>
+
 <header class="topbar">
   <a class="brand" href="#top">M<span>.</span></a>
-  <nav>
+
+  <button id="menuBtn" class="menu-btn" type="button"
+          data-i18n-attr="aria-label:ui.menu" aria-label="Menü"
+          aria-expanded="false" aria-controls="navMenu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav id="navMenu">
     <a href="#hakkimda" data-i18n="nav.about">Hakkımda</a>
     <a href="#projeler" data-i18n="nav.projects">Projeler</a>
     <a href="#yetenekler" data-i18n="nav.skills">Yetenekler</a>
@@ -46,6 +55,9 @@
 
   <!-- HERO -->
   <section class="hero">
+    <span class="hero-orb ho1" aria-hidden="true"></span>
+    <span class="hero-orb ho2" aria-hidden="true"></span>
+
     <p class="eyebrow" data-i18n="hero.eyebrow">Merhaba, ben</p>
     <h1>Mümin<span class="dot">.</span></h1>
     <p class="lead" data-i18n-html="hero.lead">
@@ -58,10 +70,15 @@
       <a class="btn" href="#iletisim" data-i18n="hero.cta2">İletişime geç</a>
     </div>
     <dl class="stats">
-      <div><dt data-i18n="stat1.l">Yayındaki proje</dt><dd data-i18n="stat1.v">5</dd></div>
-      <div><dt data-i18n="stat2.l">Platform</dt><dd data-i18n="stat2.v">4 ayrı</dd></div>
+      <div><dt data-i18n="stat1.l">Yayındaki proje</dt><dd data-count="5" data-i18n="stat1.v">5</dd></div>
+      <div><dt data-i18n="stat2.l">Platform</dt><dd data-count="4" data-suffix=" ayrı" data-i18n="stat2.v">4 ayrı</dd></div>
       <div><dt data-i18n="stat3.l">Odak</dt><dd data-i18n="stat3.v">Araçlar</dd></div>
     </dl>
+
+    <a class="scroll-hint" href="#hakkimda" data-i18n-attr="aria-label:ui.scroll" aria-label="Aşağı kaydır">
+      <span class="mouse" aria-hidden="true"><i></i></span>
+      <span data-i18n="ui.scrollText">Aşağı kaydır</span>
+    </a>
   </section>
 
   <!-- HAKKIMDA -->
@@ -86,7 +103,7 @@
     <h2 data-i18n="proj.title">Projeler</h2>
     <div class="cards">
 
-      <article class="card">
+      <article class="card tone-ai">
         <div class="card-top">
           <span class="tag" data-i18n="c1.tag">Yapay Zekâ</span>
           <span class="tag muted" data-i18n="c1.sub">AI Agent · Masaüstü</span>
@@ -108,7 +125,7 @@
         </p>
       </article>
 
-      <article class="card">
+      <article class="card tone-hw">
         <div class="card-top">
           <span class="tag" data-i18n="c2.tag">Yapay Zekâ + Donanım</span>
           <span class="tag muted">ESP32 · Edge AI</span>
@@ -130,7 +147,7 @@
         </p>
       </article>
 
-      <article class="card">
+      <article class="card tone-desk">
         <div class="card-top">
           <span class="tag" data-i18n="c3.tag">Masaüstü</span>
           <span class="tag muted" data-i18n="c3.sub">Windows · Yerel ağ</span>
@@ -152,7 +169,7 @@
         </p>
       </article>
 
-      <article class="card">
+      <article class="card tone-web">
         <div class="card-top">
           <span class="tag" data-i18n="c4.tag">Web</span>
           <span class="tag muted" data-i18n="c4.sub">Harita · PHP · MySQL</span>
@@ -174,7 +191,7 @@
         </p>
       </article>
 
-      <article class="card">
+      <article class="card tone-android">
         <div class="card-top">
           <span class="tag" data-i18n="c5.tag">Android</span>
           <span class="tag muted">Kotlin · Jetpack Compose</span>
