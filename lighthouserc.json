@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": ".",
+      "urls": ["http://127.0.0.1:8080/index.html"],
       "numberOfRuns": 1,
       "settings": {
         "chromeFlags": "--no-sandbox --disable-gpu --disable-dev-shm-usage"
