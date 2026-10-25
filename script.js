@@ -361,6 +361,37 @@ document.querySelectorAll(".lang button").forEach((b) => {
   b.addEventListener("click", () => applyLang(b.dataset.lang));
 });
 
+/* ---------------- ilk ziyaret: dil seçim katmanı (yönlendirmesiz) ---------------- */
+(function dilKatmani() {
+  const katman = document.getElementById("dilSec");
+  if (!katman) return;
+
+  let kayitli = null;
+  try { kayitli = localStorage.getItem("dil"); } catch (e) {}
+  let q = null;
+  try { q = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+
+  /* Seçim zaten yapılmışsa (kayıt veya ?lang=) katman hiç açılmasın */
+  if ((kayitli && DICT[kayitli]) || (q && DICT[q])) return;
+
+  katman.hidden = false;
+  document.documentElement.classList.add("dil-acik");
+
+  const ilk = katman.querySelector("[data-pick]");
+  if (ilk) {
+    try { ilk.focus({ preventScroll: true }); } catch (e) { try { ilk.focus(); } catch (e2) {} }
+  }
+
+  katman.querySelectorAll("[data-pick]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyLang(btn.dataset.pick);
+      document.documentElement.classList.remove("dil-acik");
+      katman.classList.add("kapan");
+      setTimeout(() => { katman.hidden = true; }, 240);
+    });
+  });
+})();
+
 /* ---------------- tema ---------------- */
 const KEY = "tema";
 const root = document.documentElement;
