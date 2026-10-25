@@ -5,7 +5,9 @@
   --muted:#8b9bab;
   --line:#1e2a36;
   --accent:#10b981;
+  --accent-ink:#10b981;   /* küçük metinler için kontrastlı vurgu */
   --accent-2:#38bdf8;
+  --link:#38bdf8;
   --radius:16px;
   --max:960px;
 }
@@ -17,7 +19,9 @@ html[data-theme="light"]{
   --muted:#5b6b7b;
   --line:#e3e9ef;
   --accent:#059669;
+  --accent-ink:#047857;
   --accent-2:#0284c7;
+  --link:#0369a1;
 }
 
 *{box-sizing:border-box}
@@ -32,7 +36,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-a{color:var(--accent-2);text-decoration:none}
+a{color:var(--link);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* ---------- top bar ---------- */
@@ -62,7 +66,7 @@ a:hover{text-decoration:underline}
   transition:.15s;
 }
 .lang button:hover{color:var(--fg)}
-.lang button.on{background:var(--accent);color:#04120d}
+.lang button.on{background:var(--accent-ink);color:#04120d}
 html[data-theme="light"] .lang button.on{color:#fff}
 
 .ghost{
@@ -73,6 +77,7 @@ html[data-theme="light"] .lang button.on{color:#fff}
 
 /* ---------- layout ---------- */
 main{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+section[id]{scroll-margin-top:78px}
 .section{padding:64px 0;border-top:1px solid var(--line)}
 .section h2{font-size:clamp(22px,3vw,30px);margin:0 0 22px;letter-spacing:-.02em}
 .grid.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px}
@@ -81,7 +86,7 @@ main{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,4vw,40px)}
 .hero{padding:clamp(56px,12vh,110px) 0 60px}
 .eyebrow{
   text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;
-  color:var(--accent);margin:0 0 12px;font-weight:600;
+  color:var(--accent-ink);margin:0 0 12px;font-weight:600;
 }
 .hero h1{font-size:clamp(44px,9vw,84px);line-height:1;margin:0 0 18px;letter-spacing:-.045em;font-weight:800}
 .hero h1 .dot{color:var(--accent)}
@@ -133,7 +138,7 @@ html[data-theme="light"] .btn.primary{color:#fff}
 }
 .skills li span{font-size:14.5px;margin:0}
 .skills .pct{
-  font-size:13.5px;font-weight:700;color:var(--accent);
+  font-size:13.5px;font-weight:700;color:var(--accent-ink);
   font-variant-numeric:tabular-nums;letter-spacing:.02em;
 }
 .skills i{
@@ -202,8 +207,8 @@ html[dir="rtl"] .lang button{letter-spacing:0}
   .topbar nav{
     order:5;position:absolute;top:100%;inset-inline:0;display:none;
     flex-direction:column;gap:2px;margin:0;z-index:20;padding:10px 16px 16px;
-    background:color-mix(in srgb,var(--bg) 96%,transparent);
-    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:color-mix(in srgb,var(--bg) 97%,transparent);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
     border-bottom:1px solid var(--line);
     box-shadow:0 18px 40px rgba(0,0,0,.28);
   }
@@ -242,7 +247,7 @@ html[data-theme="light"] body.scrolled .topbar{box-shadow:0 12px 30px rgba(20,40
 
 /* ---------- hamburger menü ---------- */
 .menu-btn{
-  display:none;place-items:center;gap:0;
+  place-items:center;gap:0;
   width:38px;height:38px;padding:9px 8px;flex:none;cursor:pointer;
   background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;
   transition:border-color .2s, background .2s;
@@ -340,6 +345,7 @@ html[dir="rtl"] .section h2::after{background:linear-gradient(270deg,var(--accen
   opacity:.9;transition:opacity .2s;
 }
 .card:hover{box-shadow:0 20px 44px rgba(0,0,0,.28)}
+html[dir="rtl"] .card::before{background:linear-gradient(270deg,var(--tone),transparent 75%)}
 html[data-theme="light"] .card:hover{box-shadow:0 18px 38px rgba(20,40,60,.12)}
 .card .tag:first-child{
   color:var(--tone-ink);border-color:color-mix(in srgb,var(--tone) 50%,transparent);
@@ -368,7 +374,7 @@ html[data-theme="light"] .tone-android{--tone:#f43f5e;--tone-ink:#be123c}
 /* ---------- butonlar ---------- */
 .btn{position:relative;overflow:hidden;backdrop-filter:blur(6px)}
 .btn.primary{
-  background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 55%,var(--accent-2)));
+  background:linear-gradient(135deg,var(--accent-ink),color-mix(in srgb,var(--accent-ink) 55%,var(--accent-2)));
   box-shadow:0 10px 26px color-mix(in srgb,var(--accent) 30%,transparent);
   transition:transform .18s, box-shadow .18s;
 }
@@ -406,6 +412,9 @@ html[data-theme="light"] .tone-android{--tone:#f43f5e;--tone-ink:#be123c}
 .lang button{transition:transform .15s, color .15s, background .2s}
 .lang button:hover{transform:translateY(-1px)}
 .lang button.on{box-shadow:0 6px 16px color-mix(in srgb,var(--accent) 35%,transparent)}
+
+/* hamburger yalnızca dar ekranda görünsün (media query'den sonra tanımlı) */
+@media (min-width:761px){ .menu-btn{display:none} }
 
 /* ---------- erişilebilirlik ---------- */
 :focus-visible{
