@@ -344,6 +344,11 @@ function applyLang(lang) {
   try { localStorage.setItem("dil", lang); } catch (e) {}
 }
 
+/* URL'deki ilk ?lang= değeri — applyLang adres çubuğunu değiştirmeden önce okunur */
+const URL_LANG = (() => {
+  try { return new URLSearchParams(location.search).get("lang"); } catch (e) { return null; }
+})();
+
 // başlangıç dili: URL (?lang=) → kayıtlı tercih → tarayıcı dili → Türkçe
 (function initLang() {
   let saved = null;
@@ -351,10 +356,7 @@ function applyLang(lang) {
   const nav = (navigator.language || "tr").toLowerCase();
   const tarayici = nav.startsWith("ar") ? "ar" : nav.startsWith("en") ? "en" : "tr";
 
-  let q = null;
-  try { q = new URLSearchParams(location.search).get("lang"); } catch (e) {}
-
-  applyLang(q && DICT[q] ? q : saved || tarayici);
+  applyLang(URL_LANG && DICT[URL_LANG] ? URL_LANG : saved || tarayici);
 })();
 
 document.querySelectorAll(".lang button").forEach((b) => {
@@ -368,11 +370,9 @@ document.querySelectorAll(".lang button").forEach((b) => {
 
   let kayitli = null;
   try { kayitli = localStorage.getItem("dil"); } catch (e) {}
-  let q = null;
-  try { q = new URLSearchParams(location.search).get("lang"); } catch (e) {}
 
-  /* Seçim zaten yapılmışsa (kayıt veya ?lang=) katman hiç açılmasın */
-  if ((kayitli && DICT[kayitli]) || (q && DICT[q])) return;
+  /* Seçim zaten yapılmışsa (kayıt veya açılışta gelen ?lang=) katman hiç açılmasın */
+  if ((kayitli && DICT[kayitli]) || (URL_LANG && DICT[URL_LANG])) return;
 
   katman.hidden = false;
   document.documentElement.classList.add("dil-acik");
