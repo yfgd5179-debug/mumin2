@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  butunluk:
+    name: Depo bütünlüğü
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Yerel bağlantılar + çeviri anahtarları
+        run: python scripts/denetle.py
+
+      - name: Yayındaki dosyalar erişilebilir mi?
+        run: |
+          python -m http.server 8080 --bind 127.0.0.1 >/dev/null 2>&1 &
+          sleep 2
+          fail=0
+          for p in / /dil.html /404.html /robots.txt /sitemap.xml /styles.css /script.js; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:8080$p")
+            echo "  $p -> $code"
+            if [ "$code" != "200" ]; then fail=1; fi
+          done
+          exit $fail
+
+  lighthouse:
+    name: Lighthouse denetimi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
