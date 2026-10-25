@@ -103,6 +103,52 @@ hatırladıktan sonra süreç tamamen sessiz çalışır.
 
 > Not: `.git` klasöründeki `otomatik-guncelleme.log` commit'lere girmez.
 
+## SEO, 404 ve otomatik denetim (CI)
+
+### SEO paketi
+
+| Dosya | Ne işe yarar |
+|---|---|
+| `robots.txt` | Tarama izinleri + `Sitemap` bildirimi |
+| `sitemap.xml` | `https://engmumin.work.gd/` için son güncelleme ve dil alternatifleri |
+| `index.html` head | `hreflang` (tr/en/ar/x-default), `og:locale`, **JSON-LD Person şeması** (isim, unvan, `sameAs`, `knowsAbout`) |
+| `script.js` | `?lang=tr\|en\|ar` ile sayfa o dile açılır; dil değişince adres çubuğu güncellenir → doğru dille paylaşılabilir |
+
+```text
+https://engmumin.work.gd/?lang=ar   ← Arapça açılır
+https://engmumin.work.gd/?lang=en   ← İngilizce açılır
+```
+
+### 404 sayfası
+
+`404.html` — üç dilde "Sayfa bulunamadı" ekranı, ana sayfa/dil seçici butonları ve
+bölüm bağlantılarıyla. GitHub Pages yanlış adreslerde otomatik gösterir.
+
+### Otomatik denetim (GitHub Actions)
+
+`.github/workflows/ci.yml` her `main` push'unda (ve PR'larda) iki iş çalıştırır:
+
+1. **Depo bütünlüğü** — `scripts/denetle.py`:
+   - yerel `href`/`src` hedefleri var mı (kırık bağlantı yok mu),
+   - kullanılan her `data-i18n` anahtarı **3 dilde de** tanımlı mı,
+   - `DICT.tr/en/ar` arasında eksik/fazla anahtar var mı,
+   - `<title>`, `charset`, `viewport`, `lang`, yinelenen `id`, `<img alt>` denetimi,
+   - ardından dosyaları yerel sunucuda açıp `/`, `/dil.html`, `/404.html`,
+     `/robots.txt`, `/sitemap.xml` 200 döner mi diye bakar.
+2. **Lighthouse CI** — `lighthouserc.json` eşikleri:
+   erişilebilirlik / SEO / iyi uygulamalar ≥ **0.9** (hata), performans ≥ 0.7 (uyarı).
+   Raporlar iş akışı artifacts'inde saklanır.
+
+Yerelde de aynı denetimi çalıştırabilirsiniz:
+
+```powershell
+python scripts\denetle.py
+```
+
+> **Öneri (elle yapılacak tek adım):** Repo → *Settings → Branches* → `main` için
+> *"Require status checks to pass before merging"* → `Depo bütünlüğü` ve
+> `Lighthouse denetimi` işaretleyin. Böylece hatalı push doğrudan engellenir.
+
 ## Yerelde önizleme
 
 Site klasöründe bir sunucu açın:
