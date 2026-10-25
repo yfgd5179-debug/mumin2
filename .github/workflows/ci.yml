@@ -61,6 +61,10 @@ jobs:
       - name: Chrome sürümü
         run: "${{ steps.chrome.outputs.chrome-path }} --version"
 
+      # Lighthouse'ın bu ortamda gerçekten çalıştığını doğrulamak için düz bir örnek sayfa
+      - name: Örnek sağlık sayfası oluştur
+        run: printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH saglik kontrolu</title></head><body><h1>Lighthouse saglik kontrolu</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html && ls -l _lh_test.html
+
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         env:
