@@ -332,16 +332,29 @@ function applyLang(lang) {
     b.classList.toggle("on", b.dataset.lang === lang);
   });
 
+  /* Adres çubuğunu güncelle: ?lang=xx ile doğru dille paylaşılabilir */
+  try {
+    const u = new URL(location.href);
+    if (u.searchParams.get("lang") !== lang) {
+      u.searchParams.set("lang", lang);
+      history.replaceState(null, "", u.pathname + "?" + u.searchParams.toString() + u.hash);
+    }
+  } catch (e) {}
+
   try { localStorage.setItem("dil", lang); } catch (e) {}
 }
 
-// başlangıç dili: kayıtlı tercih → tarayıcı dili → Türkçe
+// başlangıç dili: URL (?lang=) → kayıtlı tercih → tarayıcı dili → Türkçe
 (function initLang() {
   let saved = null;
   try { saved = localStorage.getItem("dil"); } catch (e) {}
   const nav = (navigator.language || "tr").toLowerCase();
-  let lang = saved || (nav.startsWith("ar") ? "ar" : nav.startsWith("en") ? "en" : "tr");
-  applyLang(lang);
+  const tarayici = nav.startsWith("ar") ? "ar" : nav.startsWith("en") ? "en" : "tr";
+
+  let q = null;
+  try { q = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+
+  applyLang(q && DICT[q] ? q : saved || tarayici);
 })();
 
 document.querySelectorAll(".lang button").forEach((b) => {
