@@ -445,7 +445,7 @@ html.dil-acik,html.dil-acik body{overflow:hidden}
 
 .dil-panel{
   width:min(560px,100%);
-  background:var(--bg-soft);
+  background:color-mix(in srgb, var(--bg) 86%, var(--bg-soft)); /* metin kontrastı için neredeyse opak */
   border:1px solid var(--line);
   border-radius:24px;
   padding:30px 26px 26px;
