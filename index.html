@@ -220,13 +220,13 @@
   <section id="yetenekler" class="section">
     <h2 data-i18n="skills.title">Yetenekler</h2>
     <ul class="skills">
-      <li><span data-i18n="s1">Yapay zekâ ajanları / otomasyon</span><i style="--v:90%"></i></li>
-      <li><span data-i18n="s2">Socket / yerel ağ iletişimi</span><i style="--v:92%"></i></li>
-      <li><span data-i18n="s3">Kotlin / Android SDK</span><i style="--v:90%"></i></li>
-      <li><span data-i18n="s4">Node.js / backend</span><i style="--v:84%"></i></li>
-      <li><span data-i18n="s5">PHP · MySQL</span><i style="--v:82%"></i></li>
-      <li><span data-i18n="s6">Leaflet · Google Maps API</span><i style="--v:86%"></i></li>
-      <li><span data-i18n="s7">HTML · CSS · JavaScript</span><i style="--v:88%"></i></li>
+      <li><span data-i18n="s1">Yapay zekâ ajanları / otomasyon</span><b class="pct">90%</b><i style="--v:90%"></i></li>
+      <li><span data-i18n="s2">Socket / yerel ağ iletişimi</span><b class="pct">92%</b><i style="--v:92%"></i></li>
+      <li><span data-i18n="s3">Kotlin / Android SDK</span><b class="pct">90%</b><i style="--v:90%"></i></li>
+      <li><span data-i18n="s4">Node.js / backend</span><b class="pct">84%</b><i style="--v:84%"></i></li>
+      <li><span data-i18n="s5">PHP · MySQL</span><b class="pct">82%</b><i style="--v:82%"></i></li>
+      <li><span data-i18n="s6">Leaflet · Google Maps API</span><b class="pct">86%</b><i style="--v:86%"></i></li>
+      <li><span data-i18n="s7">HTML · CSS · JavaScript</span><b class="pct">88%</b><i style="--v:88%"></i></li>
     </ul>
   </section>
 
@@ -262,7 +262,7 @@
       Bir fikrin, bir hatan ya da bir iş birliği mi var? Yukarıdaki adreslerden
       herhangi birine yazabilirsin.
     </p>
-    <div class="toast" id="toast" data-i18n="contact.copied">Kopyalandı ✓</div>
+    <div class="toast" id="toast" role="status" aria-live="polite" data-i18n="contact.copied">Kopyalandı ✓</div>
   </section>
 
 </main>
@@ -270,6 +270,9 @@
 <footer>
   <p>© <span id="yil"></span> Mümin · <a href="https://engmumin.work.gd">engmumin.work.gd</a></p>
 </footer>
+
+<button id="toTop" class="to-top" type="button"
+        data-i18n-attr="aria-label:ui.toTop" aria-label="Yukarı çık">↑</button>
 
 <script src="script.js"></script>
 </body>
