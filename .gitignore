@@ -1,0 +1,21 @@
+# Editor / OS gecici dosyalari
+~$*
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Node (yerel onizleme icin)
+node_modules/
+
+# Otomatik guncelleme betigi loglari (.git icinde tutulur)
+*.log
+
+# Paketleme ciktilari
+*.zip
+*.7z

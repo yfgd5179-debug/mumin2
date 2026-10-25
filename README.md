@@ -50,6 +50,56 @@ Arapça seçildiğinde sayfa otomatik olarak `dir="rtl"` ile sağdan sola açıl
 Yeni kart eklemek için mevcut `<article class="card">…</article>` bloğunu
 kopyalayıp `class="card placeholder"` satırını silin.
 
+## Otomatik güncelleme (git) sistemi
+
+Depo kökünde `scripts/` klasörü altında çalışan otomatik commit + push sistemi
+kurulu. Hiçbir komut yazmadan düzenlediğiniz dosyalar commit'lenir ve GitHub'a
+gider (GitHub Pages böylece kendiliğinden yayılanır).
+
+| Dosya | Ne yapar |
+|---|---|
+| `scripts/otomatik-guncelleme.ps1` | 15 saniyede bir değişiklikleri kontrol eder; fark varsa `add -A` → `commit` → `push origin main` yapar. Log: `.git/otomatik-guncelleme.log` |
+| `scripts/otomatik-guncelleme-baslat.cmd` | Betiği gizli pencerede çalıştırır (arka planda). |
+| `scripts/hemen-guncelle.cmd` | Bir kez çalıştırıp çıkar — acil commit + push. |
+| `scripts/baslangica-ekle.ps1` | Windows girişinde otomatik başlamasını sağlar (yönetici yetkisi gerekmez). |
+| `scripts/baslat-arka-plan.ps1` | İzleyiciyi gizli, bağımsız bir süreç olarak başlatır (kapanan konsoldan etkilenmez). |
+| `scripts/baslangica-cikar.ps1` | Acilis kisayolunu kaldırır. |
+| `scripts/dur.cmd` | Çalışan otomatik guncellemeyi durdurur. |
+
+### Kullanım
+
+```powershell
+# Sürekli çalışan arka plan modu (15 sn'de bir kontrol):
+powershell -ExecutionPolicy Bypass -File scripts\otomatik-guncelleme.ps1
+
+# Bir kez çalıştır:
+powershell -ExecutionPolicy Bypass -File scripts\otomatik-guncelleme.ps1 -TekGecis
+
+# Açılışta otomatik başlasın:
+powershell -ExecutionPolicy Bypass -File scripts\baslangica-ekle.ps1
+```
+
+Parametreler: `-AralikSaniye 30` (kontrol aralığı), `-ElleMesaj "metin"`
+(commit mesajı), `-TekGecis` (tek seferlik).
+
+### Kurulum kontrolü
+
+```powershell
+git remote -v        # origin adresi gerçek repo adresiniz olmalı
+```
+
+Adres henüz şablonsa (`https://github.com/KULLANICI/depo.git`) betik push'u
+atlar ve yalnızca lokal commit atar. Gerçek adresi verin:
+
+```powershell
+git remote set-url origin https://github.com/KULLANICI-ADINIZ/REPO-ADI.git
+```
+
+Push ilk kez kimlik doğrulama ister; Windows Git Credential Manager bilgiyi
+hatırladıktan sonra süreç tamamen sessiz çalışır.
+
+> Not: `.git` klasöründeki `otomatik-guncelleme.log` commit'lere girmez.
+
 ## Yerelde önizleme
 
 Site klasöründe bir sunucu açın:
