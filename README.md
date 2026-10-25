@@ -88,6 +88,9 @@ Parametreler: `-AralikSaniye 30` (kontrol aralığı), `-ElleMesaj "metin"`
 git remote -v        # origin adresi gerçek repo adresiniz olmalı
 ```
 
+Bu depo: `https://github.com/yfgd5179-debug/mumin2` (GitHub Pages `main` /
+kök dalından yayınlar).
+
 Adres henüz şablonsa (`https://github.com/KULLANICI/depo.git`) betik push'u
 atlar ve yalnızca lokal commit atar. Gerçek adresi verin:
 
