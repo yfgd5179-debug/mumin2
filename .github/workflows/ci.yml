@@ -66,8 +66,9 @@ jobs:
         run: printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH saglik kontrolu</title></head><body><h1>Lighthouse saglik kontrolu</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html && ls -l _lh_test.html
 
       # Kök neden ayrıştırma: her varyant bağımsız çalışır (ilki patlayınca durmaz)
-      - name: "Tanılama: varyant tek tek"
+      - name: "TANILAMA varyantlar"
         run: |
+          set +e
           # V1: script.js yok
           sed 's#<script src="script.js"></script>##' index.html > _v1.html
           # V2: reveal gizlemesi kapatıldı
@@ -80,36 +81,42 @@ jobs:
           sed 's#<link rel="stylesheet" href="styles.css">##' index.html > _v5.html
           printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH kontrol</title></head><body><h1>Kontrol sayfasi</h1></body></html>' > _lh_test.html
 
-          npm i -g lighthouse@12 >/dev/null 2>&1
+          echo "npx: $(command -v npx || echo YOK)"
+          echo "lighthouse global: $(command -v lighthouse || echo YOK)"
 
           kontrol() {
-            local ad=$1
-            local ek=$2
-            lighthouse "http://127.0.0.1:8080/$ad.html" --only-categories=seo --quiet \
+            local ad="$1"
+            local ek="${2:-}"
+            npx --yes lighthouse@12 "http://127.0.0.1:8080/$ad.html" --only-categories=seo --quiet \
               --chrome-flags="--no-sandbox --disable-gpu --disable-dev-shm-usage $ek" \
-              --output=json --output-path="/tmp/$ad.json" >/dev/null 2>&1
-            python3 - "$ad" <<'PY'
+              --output=json --output-path="/tmp/$ad.json" > "/tmp/$ad.log" 2>&1
+            local kod=$?
+            local son
+            son=$(tail -n 1 "/tmp/$ad.log")
+            python3 - "$ad" "$kod" "$son" <<'PY'
           import json, sys
-          ad = sys.argv[1]
+          ad, kod, son = sys.argv[1], sys.argv[2], sys.argv[3]
           try:
               d = json.load(open(f"/tmp/{ad}.json"))
               e = d.get("runtimeError")
-              print(f"{ad:12} -> {'HATA ' + e['code'] if e else 'GECTI'}")
+              durum = ("HATA " + e["code"]) if e else "GECTI"
           except Exception as ex:
-              print(f"{ad:12} -> JSON OKUNAMADI {ex}")
+              durum = f"DOSYA YOK ({ex})"
+          print(f"{ad:10} cikis={kod:>3}  {durum}   | {son[:90]}")
           PY
           }
 
-          kontrol _lh_test ""
-          kontrol _v1 ""
-          kontrol _v2 ""
-          kontrol _v3 ""
-          kontrol _v4 ""
-          kontrol _v5 ""
-          kontrol index ""
+          kontrol _lh_test
+          kontrol _v1
+          kontrol _v2
+          kontrol _v3
+          kontrol _v4
+          kontrol _v5
+          kontrol index
           kontrol index "--window-size=1350,940"
-          kontrol dil ""
-          kontrol 404 ""
+          kontrol dil
+          kontrol 404
+          echo "TANILAMA BITTI"
 
       - name: Lighthouse CI
         continue-on-error: true
