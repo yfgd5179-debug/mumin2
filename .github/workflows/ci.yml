@@ -63,12 +63,19 @@ jobs:
       - name: Varyant sayfaları oluştur
         run: |
           printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH kontrol</title></head><body><h1>Kontrol sayfasi</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html
-          sed 's#<script src="script.js"></script>##' index.html > _v1.html
-          sed 's#</head>#<style>.reveal,.stats div{opacity:1!important;transform:none!important}</style></head>#' index.html > _v2.html
-          sed 's#</head>#<style>*{filter:none!important;backdrop-filter:none!important}</style></head>#' index.html > _v3.html
-          sed 's#</head>#<style>*{animation:none!important;transition:none!important}</style></head>#' index.html > _v4.html
-          sed 's#<link rel="stylesheet" href="styles.css">##' index.html > _v5.html
-          ls -l _lh_test.html _v1.html _v2.html _v3.html _v4.html _v5.html
+          echo "--- dosya turu ---"
+          file index.html dil.html 404.html _lh_test.html
+          echo "--- ilk 32 bayt (index) ---"
+          head -c 32 index.html | od -c | head -3
+          # W1: tum <script> bloklari silindi (JSON-LD, satir ici scriptler, script.js)
+          sed '/<script/,/<\/script>/d' index.html > _w1.html
+          # W2: favicon data-URI silindi
+          sed '/rel="icon"/d' index.html > _w2.html
+          # W3: sadece index <head> + basit govde
+          { echo '<!doctype html><html lang="tr" dir="ltr">'; sed -n '/<head>/,/<\/head>/p' index.html; echo '<body><h1>Kontrol</h1></body></html>'; } > _w3.html
+          # W4: basit head + index <govde>
+          { echo '<!doctype html><html lang="tr" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kontrol</title></head>'; sed -n '/<body/,/<\/body>/p' index.html; echo '</html>'; } > _w4.html
+          ls -l _lh_test.html _w1.html _w2.html _w3.html _w4.html index.html
 
       # Her varyant kendi adımında koşar: ilki patlasa da diğerleri çalışır
       - name: "T1 kontrol"
@@ -78,40 +85,33 @@ jobs:
         with:
           urls: http://127.0.0.1:8080/_lh_test.html
 
-      - name: "V1 script yok"
-        id: v1
+      - name: "W1 scriptsiz"
+        id: w1
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_v1.html
+          urls: http://127.0.0.1:8080/_w1.html
 
-      - name: "V2 reveal kapali"
-        id: v2
+      - name: "W2 faviconsiz"
+        id: w2
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_v2.html
+          urls: http://127.0.0.1:8080/_w2.html
 
-      - name: "V3 filtre yok"
-        id: v3
+      - name: "W3 sadece head"
+        id: w3
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_v3.html
+          urls: http://127.0.0.1:8080/_w3.html
 
-      - name: "V4 animasyon yok"
-        id: v4
+      - name: "W4 sadece govde"
+        id: w4
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_v4.html
-
-      - name: "V5 css yok"
-        id: v5
-        continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: http://127.0.0.1:8080/_v5.html
+          urls: http://127.0.0.1:8080/_w4.html
 
       - name: "P1 index"
         id: p1
@@ -122,10 +122,9 @@ jobs:
 
       - name: "VARYANT SONUCLARI"
         run: |
-          echo "T1 kontrol   : ${{ steps.t1.outcome }}"
-          echo "V1 script yok: ${{ steps.v1.outcome }}"
-          echo "V2 reveal yok: ${{ steps.v2.outcome }}"
-          echo "V3 filtre yok: ${{ steps.v3.outcome }}"
-          echo "V4 anim yok  : ${{ steps.v4.outcome }}"
-          echo "V5 css yok   : ${{ steps.v5.outcome }}"
-          echo "P1 index     : ${{ steps.p1.outcome }}"
+          echo "T1 kontrol    : ${{ steps.t1.outcome }}"
+          echo "W1 scriptsiz  : ${{ steps.w1.outcome }}"
+          echo "W2 faviconsiz : ${{ steps.w2.outcome }}"
+          echo "W3 sadece head: ${{ steps.w3.outcome }}"
+          echo "W4 sadece govde: ${{ steps.w4.outcome }}"
+          echo "P1 index      : ${{ steps.p1.outcome }}"
