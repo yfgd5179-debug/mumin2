@@ -63,19 +63,22 @@ jobs:
       - name: Varyant sayfaları oluştur
         run: |
           printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH kontrol</title></head><body><h1>Kontrol sayfasi</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html
-          echo "--- dosya turu ---"
-          file index.html dil.html 404.html _lh_test.html
-          echo "--- ilk 32 bayt (index) ---"
-          head -c 32 index.html | od -c | head -3
-          # W1: tum <script> bloklari silindi (JSON-LD, satir ici scriptler, script.js)
-          sed '/<script/,/<\/script>/d' index.html > _w1.html
-          # W2: favicon data-URI silindi
-          sed '/rel="icon"/d' index.html > _w2.html
-          # W3: sadece index <head> + basit govde
-          { echo '<!doctype html><html lang="tr" dir="ltr">'; sed -n '/<head>/,/<\/head>/p' index.html; echo '<body><h1>Kontrol</h1></body></html>'; } > _w3.html
-          # W4: basit head + index <govde>
-          { echo '<!doctype html><html lang="tr" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kontrol</title></head>'; sed -n '/<body/,/<\/body>/p' index.html; echo '</html>'; } > _w4.html
-          ls -l _lh_test.html _w1.html _w2.html _w3.html _w4.html index.html
+          python3 - <<'PY'
+          import re
+          s = open('index.html', encoding='utf-8').read()
+          # X1: sadece dil yonlendirme scripti silindi
+          x1 = re.sub(r'<script>\s*/\*[^<]*?location\.replace\("dil\.html"\);[^<]*?</script>', '', s, flags=re.S)
+          # X2: sadece JSON-LD silindi
+          x2 = re.sub(r'<script type="application/ld\+json">.*?</script>', '', s, flags=re.S)
+          open('_x1.html', 'w', encoding='utf-8').write(x1)
+          open('_x2.html', 'w', encoding='utf-8').write(x2)
+          print('x1 boyut', len(x1), '| x2 boyut', len(x2), '| orijinal', len(s))
+          PY
+          # X3: 404 giris animasyonu kapatildi
+          sed 's#</head>#<style>.enter{opacity:1!important;animation:none!important}</style></head>#' 404.html > _x3.html
+          # X4: 404 filtreleri kapatildi
+          sed 's#</head>#<style>*{filter:none!important;backdrop-filter:none!important}</style></head>#' 404.html > _x4.html
+          ls -l _x1.html _x2.html _x3.html _x4.html
 
       # Her varyant kendi adımında koşar: ilki patlasa da diğerleri çalışır
       - name: "T1 kontrol"
@@ -85,33 +88,33 @@ jobs:
         with:
           urls: http://127.0.0.1:8080/_lh_test.html
 
-      - name: "W1 scriptsiz"
-        id: w1
+      - name: "X1 yonlendirme yok"
+        id: x1
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_w1.html
+          urls: http://127.0.0.1:8080/_x1.html
 
-      - name: "W2 faviconsiz"
-        id: w2
+      - name: "X2 jsonld yok"
+        id: x2
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_w2.html
+          urls: http://127.0.0.1:8080/_x2.html
 
-      - name: "W3 sadece head"
-        id: w3
+      - name: "X3 404 animasyon yok"
+        id: x3
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_w3.html
+          urls: http://127.0.0.1:8080/_x3.html
 
-      - name: "W4 sadece govde"
-        id: w4
+      - name: "X4 404 filtre yok"
+        id: x4
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: http://127.0.0.1:8080/_w4.html
+          urls: http://127.0.0.1:8080/_x4.html
 
       - name: "P1 index"
         id: p1
@@ -122,9 +125,9 @@ jobs:
 
       - name: "VARYANT SONUCLARI"
         run: |
-          echo "T1 kontrol    : ${{ steps.t1.outcome }}"
-          echo "W1 scriptsiz  : ${{ steps.w1.outcome }}"
-          echo "W2 faviconsiz : ${{ steps.w2.outcome }}"
-          echo "W3 sadece head: ${{ steps.w3.outcome }}"
-          echo "W4 sadece govde: ${{ steps.w4.outcome }}"
-          echo "P1 index      : ${{ steps.p1.outcome }}"
+          echo "T1 kontrol        : ${{ steps.t1.outcome }}"
+          echo "X1 yonlendirme yok: ${{ steps.x1.outcome }}"
+          echo "X2 jsonld yok     : ${{ steps.x2.outcome }}"
+          echo "X3 404 anim yok   : ${{ steps.x3.outcome }}"
+          echo "X4 404 filtre yok : ${{ steps.x4.outcome }}"
+          echo "P1 index          : ${{ steps.p1.outcome }}"
