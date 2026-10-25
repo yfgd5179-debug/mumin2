@@ -413,3 +413,132 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: "-45% 0px -50% 0px" });
 sections.forEach((s) => io.observe(s));
+
+/* =========================================================
+   Arayüz geliştirmeleri — animasyonlar, menü, kaydırma
+   ========================================================= */
+
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- sayı sayacı (istatistikler + yüzde etiketleri) ---------- */
+function countUp(el) {
+  const raw = (el.textContent || "").trim();
+  const m = raw.match(/^(\d+)(\D*)$/);
+  if (!m) return;
+  const hedef = parseInt(m[1], 10);
+  const son = m[2] || "";
+  if (REDUCE || !hedef) { el.textContent = hedef + son; return; }
+
+  const sure = 950;
+  const t0 = performance.now();
+  (function adim(t) {
+    const p = Math.min(1, (t - t0) / sure);
+    el.textContent = Math.round(hedef * (1 - Math.pow(1 - p, 3))) + son;
+    if (p < 1) requestAnimationFrame(adim);
+  })(t0);
+}
+
+/* ---------- görünüre girince açılan öğeler ---------- */
+(function reveals() {
+  const sel =
+    ".section h2, .grid.two > p, .card, .skills, .contact-card, .contact-note, .scroll-hint";
+  const els = [...document.querySelectorAll(sel)];
+
+  const sayac = new Map();
+  els.forEach((el) => {
+    const p = el.parentElement;
+    const i = sayac.get(p) || 0;
+    sayac.set(p, i + 1);
+    el.classList.add("reveal");
+    el.style.setProperty("--d", (i * 0.08).toFixed(2) + "s");
+  });
+
+  const stats = document.querySelector(".stats");
+  if (stats) {
+    stats.classList.add("prep");
+    [...stats.children].forEach((d, i) =>
+      d.style.setProperty("--d", (i * 0.1).toFixed(2) + "s")
+    );
+  }
+
+  const hedefler = stats ? [...els, stats] : els;
+
+  const goster = (el) => {
+    el.classList.add("in");
+    if (el.classList.contains("stats")) el.querySelectorAll("[data-count]").forEach(countUp);
+    if (el.classList.contains("skills")) el.querySelectorAll(".pct").forEach(countUp);
+  };
+
+  if (!("IntersectionObserver" in window) || REDUCE) {
+    hedefler.forEach(goster);
+    return;
+  }
+
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      goster(e.target);
+      ro.unobserve(e.target);
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+
+  hedefler.forEach((t) => ro.observe(t));
+})();
+
+/* ---------- kaydırma: ilerleme çubuğu, üst bar, yukarı çık ---------- */
+(function scrollUI() {
+  const bar = document.getElementById("progress");
+  const toTop = document.getElementById("toTop");
+  let bekliyor = false;
+
+  function guncelle() {
+    bekliyor = false;
+    const y = window.scrollY || document.documentElement.scrollTop;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar) bar.style.transform = "scaleX(" + (h > 0 ? Math.min(1, y / h) : 0) + ")";
+    document.body.classList.toggle("scrolled", y > 8);
+    if (toTop) toTop.classList.toggle("show", y > 520);
+  }
+
+  addEventListener("scroll", () => {
+    if (bekliyor) return;
+    bekliyor = true;
+    requestAnimationFrame(guncelle);
+  }, { passive: true });
+
+  guncelle();
+
+  if (toTop) {
+    toTop.addEventListener("click", () =>
+      window.scrollTo({ top: 0, behavior: REDUCE ? "auto" : "smooth" })
+    );
+  }
+})();
+
+/* ---------- mobil menü ---------- */
+(function mobileMenu() {
+  const topbar = document.querySelector(".topbar");
+  const btn = document.getElementById("menuBtn");
+  const menu = document.getElementById("navMenu");
+  if (!topbar || !btn || !menu) return;
+
+  const kapat = () => {
+    topbar.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+  };
+
+  btn.addEventListener("click", () => {
+    const acik = topbar.classList.toggle("open");
+    btn.setAttribute("aria-expanded", acik ? "true" : "false");
+  });
+
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", kapat));
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") kapat();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!topbar.contains(e.target)) kapat();
+  });
+})();
