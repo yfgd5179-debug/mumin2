@@ -21,6 +21,11 @@ import re
 import sys
 from pathlib import Path
 
+try:  # Windows terminallerinde UTF-8 çıktısı
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 KOK = Path(__file__).resolve().parent.parent
 HTML_DOSYALARI = sorted(p for p in KOK.glob("*.html"))
 DILLER = ("tr", "en", "ar")
@@ -51,7 +56,12 @@ for dosya in HTML_DOSYALARI:
         hedef = u.split("#", 1)[0].split("?", 1)[0]
         if not hedef:
             continue
-        if not (dosya.parent / hedef).resolve().exists():
+        # kökten gelen yollar (/dil.html) depo köküne göre çözümlenir
+        if hedef.startswith("/"):
+            p = (KOK / hedef.lstrip("/")).resolve()
+        else:
+            p = (dosya.parent / hedef).resolve()
+        if not p.exists():
             hatalar.append(f"{dosya.name}: bulunamayan yerel hedef -> {u}")
 
 # ------------------------------------------------------- 2-3) i18n anahtar tutarlılığı
