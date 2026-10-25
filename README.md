@@ -1,18 +1,33 @@
 # engmumin.work.gd — kişisel site
 
-Statik, build gerektirmeyen tek sayfalık portfolyo. HTML + CSS + 20 satır JS.
+Statik, build gerektirmeyen tek sayfalık portfolyo. HTML + CSS + JavaScript
+(3 dil: TR / EN / AR, tema, kopyalama).
 
 ```
 site/
-├── index.html   # Tüm içerik burada
-├── styles.css   # Tema ve düzen
-├── script.js    # Tema + menü vurgusu
+├── index.html   # Yapı ve varsayılan (Türkçe) metinler
+├── styles.css   # Tema, düzen, RTL (Arapça) kuralları
+├── script.js    # Çeviri sözlüğü + tema + dil seçimi + kopyala
 └── CNAME        # GitHub Pages'e özel alan adı
 ```
 
 ## İçeriği düzenleyin
 
-`index.html` içinde şu noktaları kendinize göre değiştirin:
+Site **3 dilde** yayında: **Türkçe / English / العربية** (sağ üstteki TR·EN·AR düğmeleri).
+
+Tüm metinler `script.js` içindeki `DICT` nesnesinde, dil dil anahtar-ad çifti
+olarak durur. Yeni bir metin eklemek için:
+
+1. `index.html` içinde görünüre `data-i18n="anahtar"` ekleyin (HTML içi
+   `<strong>` gibi etiket gerekiyorsa `data-i18n-html` kullanın).
+2. `script.js` → `DICT.tr`, `DICT.en`, `DICT.ar` içine aynı anahtarı üç dilde
+   de tanımlayın.
+3. Erişilebilir metinlerde (`aria-label`) `data-i18n-attr="aria-label:anahtar"`
+   kullanın.
+
+Arapça seçildiğinde sayfa otomatik olarak `dir="rtl"` ile sağdan sola açılır.
+
+### `index.html` içindeki değişilecek noktalar
 
 | Ne | Nerede |
 |---|---|

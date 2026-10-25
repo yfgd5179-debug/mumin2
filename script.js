@@ -24,6 +24,8 @@ const DICT = {
     "nav.projects": "Projeler",
     "nav.skills": "Yetenekler",
     "nav.contact": "İletişim",
+    "ui.theme": "Tema değiştir",
+    "ui.langGroup": "Dil seçimi",
 
     "hero.eyebrow": "Merhaba, ben",
     "hero.lead":
@@ -111,6 +113,8 @@ const DICT = {
     "nav.projects": "Projects",
     "nav.skills": "Skills",
     "nav.contact": "Contact",
+    "ui.theme": "Toggle theme",
+    "ui.langGroup": "Choose language",
 
     "hero.eyebrow": "Hello, I'm",
     "hero.lead":
@@ -198,6 +202,8 @@ const DICT = {
     "nav.projects": "المشاريع",
     "nav.skills": "المهارات",
     "nav.contact": "التواصل",
+    "ui.theme": "تبديل المظهر",
+    "ui.langGroup": "اختيار اللغة",
 
     "hero.eyebrow": "مرحبًا، أنا",
     "hero.lead":
@@ -294,6 +300,14 @@ function applyLang(lang) {
   document.querySelectorAll("[data-i18n-html]").forEach((el) => {
     const v = d[el.dataset.i18nHtml];
     if (v != null) el.innerHTML = v;
+  });
+
+  document.querySelectorAll("[data-i18n-attr]").forEach((el) => {
+    el.dataset.i18nAttr.split(",").forEach((pair) => {
+      const [attr, key] = pair.split(":").map((s) => s.trim());
+      const v = d[key];
+      if (attr && v != null) el.setAttribute(attr, v);
+    });
   });
 
   document.documentElement.lang = lang;
