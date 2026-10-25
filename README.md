@@ -5,11 +5,20 @@ Statik, build gerektirmeyen tek sayfalık portfolyo. HTML + CSS + JavaScript
 
 ```
 site/
+├── dil.html     # İlk açılışta görülen dil seçme sayfası
 ├── index.html   # Yapı ve varsayılan (Türkçe) metinler
 ├── styles.css   # Tema, düzen, RTL (Arapça) kuralları
 ├── script.js    # Çeviri sözlüğü + tema + dil seçimi + kopyala
 └── CNAME        # GitHub Pages'e özel alan adı
 ```
+
+### Dil akışı
+
+1. Ziyaretçi siteye girer → `dil.html` açılır (tercih `localStorage.dil`'de yoksa).
+2. TR / EN / AR seçilir → tercih kaydedilir, `index.html`'e geçilir.
+3. Sonraki ziyaretlerde doğrudan site açılır; sağ üstteki **TR · EN · AR**
+   düğmeleriyle dil her an değiştirilebilir.
+4. Tercihi silinirse (gizli sekme dahil) seçim ekranı tekrar gelir.
 
 ## İçeriği düzenleyin
 

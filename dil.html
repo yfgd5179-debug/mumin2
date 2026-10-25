@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Dil seçin — Mümin</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2310b981'/%3E%3Ctext x='50' y='68' font-size='52' font-family='sans-serif' font-weight='700' fill='%2304120d' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<script>
+  /* Daha önce dil seçildiyse doğrudan siteye git */
+  try { if (localStorage.getItem("dil")) location.replace("index.html"); } catch (e) {}
+</script>
+<style>
+  :root{
+    --bg:#0b1117; --bg-soft:#111a23; --fg:#e6edf3; --muted:#8b9bab;
+    --line:#1e2a36; --accent:#10b981; --accent2:#38bdf8;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font:16px/1.6 ui-sans-serif,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex;align-items:center;justify-content:center;
+    padding:32px 20px;text-align:center;
+  }
+  .wrap{width:100%;max-width:760px}
+  .brand{
+    font-size:26px;font-weight:800;letter-spacing:-.03em;
+    display:inline-block;margin-bottom:34px;color:var(--fg);text-decoration:none;
+  }
+  .brand span{color:var(--accent)}
+  h1{
+    font-size:clamp(26px,5vw,40px);margin:0 0 8px;letter-spacing:-.03em;font-weight:800;
+  }
+  .sub{color:var(--muted);font-size:15.5px;margin:0 0 34px}
+  .opts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .opt{
+    display:block;text-decoration:none;cursor:pointer;
+    background:var(--bg-soft);border:1px solid var(--line);color:var(--fg);
+    border-radius:18px;padding:26px 18px;
+    transition:transform .16s, border-color .16s;
+  }
+  .opt:hover,.opt:focus-visible{
+    transform:translateY(-4px);border-color:var(--accent);outline:none;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .opt .big{display:block;font-size:24px;font-weight:700;letter-spacing:-.01em}
+  .opt .hint{display:block;margin-top:6px;font-size:14px;color:var(--muted)}
+  .opt .code{
+    display:inline-block;margin-top:14px;font-size:11.5px;font-weight:700;
+    letter-spacing:.14em;color:var(--accent);
+    border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);
+    padding:3px 10px;border-radius:999px;
+  }
+  .note{margin-top:30px;font-size:13.5px;color:var(--muted);line-height:1.9}
+  .note b{color:var(--fg);font-weight:600}
+
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f7f9fb;--bg-soft:#fff;--fg:#0d151c;--muted:#5b6b7b;--line:#e3e9ef;--accent:#059669}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="brand" href="./">M<span>.</span></a>
+
+    <h1>Dil seçin</h1>
+    <p class="sub">Choose a language &nbsp;·&nbsp; اختر اللغة</p>
+
+    <div class="opts">
+      <button type="button" class="opt" data-l="tr">
+        <span class="big">Türkçe</span>
+        <span class="hint">Merhaba, ben Mümin</span>
+        <span class="code">TR</span>
+      </button>
+
+      <button type="button" class="opt" data-l="en">
+        <span class="big">English</span>
+        <span class="hint">Hello, I'm Mümin</span>
+        <span class="code">EN</span>
+      </button>
+
+      <button type="button" class="opt" data-l="ar">
+        <span class="big">العربية</span>
+        <span class="hint">مرحبًا، أنا مُمين</span>
+        <span class="code">AR</span>
+      </button>
+    </div>
+
+    <p class="note">
+      <b>Seçimin hatırlanır</b> · Your choice is remembered · يتم تذكر اختيارك<br>
+      Sağ üstteki TR · EN · AR düğmeleriyle istediğin an değiştirebilirsin.
+    </p>
+  </div>
+
+<script>
+  document.querySelectorAll("[data-l]").forEach((b) => {
+    b.addEventListener("click", () => {
+      try { localStorage.setItem("dil", b.dataset.l); } catch (e) {}
+      location.replace("index.html");
+    });
+  });
+</script>
+</body>
+</html>
