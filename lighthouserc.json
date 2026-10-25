@@ -2,12 +2,10 @@
   "ci": {
     "collect": {
       "staticDistDir": ".",
-      "url": [
-        "http://localhost/index.html",
-        "http://localhost/dil.html",
-        "http://localhost/404.html"
-      ],
-      "numberOfRuns": 1
+      "numberOfRuns": 1,
+      "settings": {
+        "chromeFlags": "--no-sandbox --disable-gpu --disable-dev-shm-usage"
+      }
     },
     "assert": {
       "assertions": {
