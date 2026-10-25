@@ -51,33 +51,20 @@ jobs:
           python -m http.server 8080 --bind 127.0.0.1 >/dev/null 2>&1 &
           sleep 2
 
-      # GEÇİCİ TANILAMA ADIMI — sorun çözülünce kaldırılacak
-      - name: "TANILAMA: headless boya testi"
-        run: |
-          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
-          echo "chrome: $CHROME"
-          "$CHROME" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
-            --screenshot=/tmp/ekran.png --window-size=1280,720 --virtual-time-budget=8000 \
-            http://127.0.0.1:8080/index.html 2>/tmp/chrome.err || echo "chrome çıkış kodu=$?"
-          ls -l /tmp/ekran.png || echo "ekran görüntüsü YOK"
-          python -c "import struct;d=open('/tmp/ekran.png','rb').read();w,h=struct.unpack('>II',d[16:24]);print('PNG',w,'x',h,len(d),'bayt')" 2>/dev/null || true
-          echo '--- chrome stderr (son 25 satır) ---'
-          tail -25 /tmp/chrome.err
+      # Chrome sürümü sabitlenir: Lighthouse 12.6 + sistem Chrome (155) NO_FCP hatası veriyor.
+      - name: Sabit Chrome kur
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: "140"
 
-      - name: "TANILAMA: lighthouse verbose"
-        run: |
-          npm i -g lighthouse@latest >/dev/null 2>&1
-          lighthouse http://127.0.0.1:8080/index.html --verbose --only-categories=seo \
-            --chrome-flags="--headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage" \
-            --output=json --output-path=/tmp/lh.json 2>/tmp/lh.log || true
-          echo '--- lighthouse: boya/FP satırları ---'
-          grep -iE 'paint|fcp|navigation loaded|status.*begin|trace' /tmp/lh.log | head -40
-          echo '--- lighthouse: hatalar ---'
-          grep -iE 'error|NO_FCP' /tmp/lh.log | head -20
-          python -c "import json;d=json.load(open('/tmp/lh.json'));print('puanlar:',{k:v.get('score') for k,v in d.get('categories',{}).items()});print('hata:',d.get('runtimeError'))" 2>/dev/null || echo "json yok"
+      - name: Chrome sürümü
+        run: "${{ steps.chrome.outputs.chrome-path }} --version"
 
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         with:
           configPath: ./lighthouserc.json
           uploadArtifacts: true
