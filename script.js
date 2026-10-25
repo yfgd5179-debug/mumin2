@@ -349,6 +349,11 @@ const URL_LANG = (() => {
   try { return new URLSearchParams(location.search).get("lang"); } catch (e) { return null; }
 })();
 
+/* Kayıtlı dil tercihi — applyLang yazmadan ÖNCEki hâli (dil katmanı bunu sorar) */
+const ILK_DIL_KAYDI = (() => {
+  try { return localStorage.getItem("dil"); } catch (e) { return null; }
+})();
+
 // başlangıç dili: URL (?lang=) → kayıtlı tercih → tarayıcı dili → Türkçe
 (function initLang() {
   let saved = null;
@@ -368,11 +373,8 @@ document.querySelectorAll(".lang button").forEach((b) => {
   const katman = document.getElementById("dilSec");
   if (!katman) return;
 
-  let kayitli = null;
-  try { kayitli = localStorage.getItem("dil"); } catch (e) {}
-
   /* Seçim zaten yapılmışsa (kayıt veya açılışta gelen ?lang=) katman hiç açılmasın */
-  if ((kayitli && DICT[kayitli]) || (URL_LANG && DICT[URL_LANG])) return;
+  if ((ILK_DIL_KAYDI && DICT[ILK_DIL_KAYDI]) || (URL_LANG && DICT[URL_LANG])) return;
 
   katman.hidden = false;
   document.documentElement.classList.add("dil-acik");
