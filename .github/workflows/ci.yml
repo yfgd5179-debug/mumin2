@@ -65,6 +65,17 @@ jobs:
       - name: Örnek sağlık sayfası oluştur
         run: printf '%s' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LH saglik kontrolu</title></head><body><h1>Lighthouse saglik kontrolu</h1><p>Duz metin icerik.</p></body></html>' > _lh_test.html && ls -l _lh_test.html
 
+      # Kök neden ayrıştırma: hangi varyant geçebiliyor?
+      - name: Varyant sayfalar oluştur
+        run: |
+          # V1: script.js yok (reveal gizlemesi hiç eklenmez)
+          sed 's#<script src="script.js"></script>##' index.html > _v1.html
+          # V2: script.js var ama gizleme CSS'i kapatıldı
+          sed 's#</head>#<style>.reveal,.stats div,.reveal.in{opacity:1!important;transform:none!important}</style></head>#' index.html > _v2.html
+          # V3: blur efektleri tamamen kapalı
+          sed 's#</head>#<style>.hero-orb{filter:none!important}*{backdrop-filter:none!important}</style></head>#' index.html > _v3.html
+          ls -l _v1.html _v2.html _v3.html
+
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         env:
