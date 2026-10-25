@@ -1,0 +1,8 @@
+# engmumin.work.gd —arama motoru kuralları
+User-agent: *
+Allow: /
+
+# Dil seçim sayfası yalnızca yönlendirme amaçlıdır (ayrıca noindex)
+# Engellenmez; noindex etiketinin görülmesi gerekir.
+
+Sitemap: https://engmumin.work.gd/sitemap.xml
