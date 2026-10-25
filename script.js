@@ -55,11 +55,11 @@ const DICT = {
     "c1.p1": "Otomasyon",
 
     "c2.tag": "Yapay Zekâ + Donanım",
-    "c2.title": "ESP32 ile Kişi Tespiti ve Konum Tahmini",
+    "c2.title": "ESP32 ile Duvar Arkası Görme ve Konum Tahmini",
     "c2.desc":
-      "ESP32 üzerine kurulu yapay zekâ projesi. Görüş alanındaki, hatta engellerin arkasındaki kişiyi tespit edip yerini tahmin ediyor.",
+      "ESP32 üzerine kurulu yapay zekâ projesi. Duvarın arkasındaki kişiyi tespit edip yerini tahmin ediyor.",
     "c2.f1": "Donanım üzerinde çalışan hafif model (edge AI)",
-    "c2.f2": "Sensör/görüntü verisinden kişi tespiti",
+    "c2.f2": "Duvar arkasındaki kişiyi tespit eder",
     "c2.f3": "Tespit edilen kişinin konumunu tahmin eder",
     "c2.p1": "Görsel işleme",
 
@@ -144,11 +144,11 @@ const DICT = {
     "c1.p1": "Automation",
 
     "c2.tag": "AI + Hardware",
-    "c2.title": "Person Detection and Location Prediction with ESP32",
+    "c2.title": "Seeing Behind Walls — Detection & Location Prediction with ESP32",
     "c2.desc":
-      "An AI project built on the ESP32. It detects a person in its field of view — even behind obstacles — and predicts their location.",
+      "An AI project built on the ESP32. It detects a person on the other side of a wall and predicts their location.",
     "c2.f1": "Lightweight model running on the hardware (edge AI)",
-    "c2.f2": "Person detection from sensor / image data",
+    "c2.f2": "Detects a person behind a wall",
     "c2.f3": "Predicts the location of the detected person",
     "c2.p1": "Image processing",
 
@@ -233,11 +233,11 @@ const DICT = {
     "c1.p1": "أتمتة",
 
     "c2.tag": "ذكاء اصطناعي + عتاد",
-    "c2.title": "كشف الأشخاص وتحديد موقعهم باستخدام ESP32",
+    "c2.title": "الرؤية خلف الجدار — الكشف عن الأشخاص وتحديد موقعهم بـ ESP32",
     "c2.desc":
-      "مشروع ذكاء اصطناعي مبني على ESP32. يكتشف الشخص داخل مجال الرؤية، وحتى خلف العوائق، ويتنبأ بموقعه.",
+      "مشروع ذكاء اصطناعي مبني على ESP32. يكتشف الشخص خلف الجدار ويتنبأ بموقعه.",
     "c2.f1": "نموذج خفيف يعمل على العتاد (ذكاء اصطناعي طرفي)",
-    "c2.f2": "كشف الأشخاص من بيانات المستشعرات والصور",
+    "c2.f2": "يكشف الشخص الموجود خلف الجدار",
     "c2.f3": "يتنبأ بموقع الشخص المكتشف",
     "c2.p1": "معالجة الصور",
 
