@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mümin — Uygulama & Araç Geliştiricisi</title>
-<meta name="description" content="Mümin'in kişisel sitesi. Android, masaüstü ve web uygulamaları; ağ ve harita araçları.">
+<meta name="description" content="Mümin'in kişisel sitesi. Android, masaüstü ve web uygulamaları; yapay zekâ, ağ ve harita araçları.">
 <meta name="author" content="Mümin">
 
-<!-- Sosyal / önizleme -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mümin — Uygulama & Araç Geliştiricisi">
-<meta property="og:description" content="Android, masaüstü ve web uygulamaları; ağ ve harita araçları.">
+<meta property="og:description" content="Android, masaüstü ve web uygulamaları; yapay zekâ, ağ ve harita araçları.">
 <meta property="og:url" content="https://engmumin.work.gd/">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://engmumin.work.gd/">
 
-<!-- Favicon (inline SVG, dosya gerekmez) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2310b981'/%3E%3Ctext x='50' y='68' font-size='52' font-family='sans-serif' font-weight='700' fill='%2304120d' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="styles.css">
@@ -25,49 +23,53 @@
 <header class="topbar">
   <a class="brand" href="#top">M<span>.</span></a>
   <nav>
-    <a href="#hakkimda">Hakkımda</a>
-    <a href="#projeler">Projeler</a>
-    <a href="#yetenekler">Yetenekler</a>
-    <a href="#iletisim">İletişim</a>
+    <a href="#hakkimda" data-i18n="nav.about">Hakkımda</a>
+    <a href="#projeler" data-i18n="nav.projects">Projeler</a>
+    <a href="#yetenekler" data-i18n="nav.skills">Yetenekler</a>
+    <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
   </nav>
-  <button id="themeToggle" class="ghost" type="button" aria-label="Tema değiştir">◐</button>
+
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="tr" class="on">TR</button>
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="ar">AR</button>
+  </div>
+
+  <button id="themeToggle" class="ghost" type="button" aria-label="Theme">◐</button>
 </header>
 
 <main id="top">
 
   <!-- HERO -->
   <section class="hero">
-    <p class="eyebrow">Merhaba, ben</p>
+    <p class="eyebrow" data-i18n="hero.eyebrow">Merhaba, ben</p>
     <h1>Mümin<span class="dot">.</span></h1>
-    <p class="lead">
+    <p class="lead" data-i18n-html="hero.lead">
       Uygulama ve araç geliştiricisiyim. <strong>Android</strong>,
-      <strong>masaüstü</strong> ve <strong>web</strong> tarafında; ağ
-      iletişimi, dosya paylaşımı ve harita tabanlı iş araçları yapıyorum.
-      Bir problemi görür, çözer, sonra başkalarının da kullanabileceği bir
-      araca dönüştürürüm.
+      <strong>masaüstü</strong> ve <strong>web</strong> tarafında; yapay zekâ,
+      ağ iletişimi ve harita tabanlı iş araçları yapıyorum.
     </p>
     <div class="cta">
-      <a class="btn primary" href="#projeler">Projelerimi gör</a>
-      <a class="btn" href="#iletisim">İletişime geç</a>
+      <a class="btn primary" href="#projeler" data-i18n="hero.cta1">Projelerimi gör</a>
+      <a class="btn" href="#iletisim" data-i18n="hero.cta2">İletişime geç</a>
     </div>
     <dl class="stats">
-      <div><dt>Yayındaki proje</dt><dd>3</dd></div>
-      <div><dt>Platform</dt><dd>3 ayrı</dd></div>
-      <div><dt>Odak</dt><dd>Araçlar</dd></div>
+      <div><dt data-i18n="stat1.l">Yayındaki proje</dt><dd data-i18n="stat1.v">5</dd></div>
+      <div><dt data-i18n="stat2.l">Platform</dt><dd data-i18n="stat2.v">4 ayrı</dd></div>
+      <div><dt data-i18n="stat3.l">Odak</dt><dd data-i18n="stat3.v">Araçlar</dd></div>
     </dl>
   </section>
 
   <!-- HAKKIMDA -->
   <section id="hakkimda" class="section">
-    <h2>Hakkımda</h2>
+    <h2 data-i18n="about.title">Hakkımda</h2>
     <div class="grid two">
-      <p>
-        Günlük işleri kolaylaştıran <strong>araçlar</strong> yapmayı seviyorum:
-        LAN üzerinde dosya gönderen bir program, haritada ilan numarasını
-        gösteren bir panel, telefonda ayarı tek dokunuşla düzelten bir uygulama…
-        Hepsi aynı meraktan doğuyor — <em>bu iş neden elle yapılıyor?</em>
+      <p data-i18n="about.p1">
+        Günlük işleri kolaylaştıran araçlar yapmayı seviyorum: LAN üzerinde
+        dosya gönderen bir program, haritada ilan numarasını gösteren bir panel,
+        bilgisayarı yöneten bir yapay zekâ asistanı… Hepsi aynı meraktan doğuyor.
       </p>
-      <p>
+      <p data-i18n="about.p2">
         Bir sorunu çözerken önce neden bozulduğunu anlamaya çalışırım, sonra
         sonucu sade bir arayüze indirgerim. Kullanıcının teknik bilgisi olmasa
         bile işini bitirebilsin isterim.
@@ -77,24 +79,67 @@
 
   <!-- PROJELER -->
   <section id="projeler" class="section">
-    <h2>Projeler</h2>
+    <h2 data-i18n="proj.title">Projeler</h2>
     <div class="cards">
 
       <article class="card">
         <div class="card-top">
-          <span class="tag">Masaüstü</span>
-          <span class="tag muted">Windows · Yerel ağ</span>
+          <span class="tag" data-i18n="c1.tag">Yapay Zekâ</span>
+          <span class="tag muted" data-i18n="c1.sub">AI Agent · Masaüstü</span>
         </div>
-        <h3>Kerkük Üniversitesi — LAN Haberleşme & Dosya Aktarımı</h3>
-        <p>
-          Kurum içindeki çalışanların aynı yerel ağ üzerinden birbirine mesaj
-          yazabildiği ve dosya gönderebildiği masaüstü uygulaması.
-          İnternet çıkışı olmadan, sadece LAN üzerinde çalışır.
+        <h3 data-i18n="c1.title">Jarvis — Kişisel Yapay Zekâ Asistanı</h3>
+        <p data-i18n="c1.desc">
+          Kendi yazdığım, ajan gibi çalışan kişisel asistan. Bilgisayara erişimi
+          var; verdiğin işi kendi adımlarını planlayarak tamamlar.
         </p>
         <ul class="feat">
-          <li>Ağdaki kullanıcıları otomatik bulma ve mesajlaşma</li>
-          <li>Büyük dosyaları yerel ağ üzerinden hızla gönderme</li>
-          <li>Sunucu kurulumu ve dış ağ gerektirmez — gizlilik LAN'da kalır</li>
+          <li data-i18n="c1.f1">Bilgisayara erişip gerçek işleri yapan ajan mimarisi</li>
+          <li data-i18n="c1.f2">Adımları kendi planlar, araçları kullanır, sonucu raporlar</li>
+          <li data-i18n="c1.f3">Sohbetle komut ver, geri kalanını o halleder</li>
+        </ul>
+        <p class="card-links">
+          <span class="pill">AI Agent</span>
+          <span class="pill">LLM</span>
+          <span class="pill" data-i18n="c1.p1">Otomasyon</span>
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="tag" data-i18n="c2.tag">Yapay Zekâ + Donanım</span>
+          <span class="tag muted">ESP32 · Edge AI</span>
+        </div>
+        <h3 data-i18n="c2.title">ESP32 ile Kişi Tespiti ve Konum Tahmini</h3>
+        <p data-i18n="c2.desc">
+          ESP32 üzerine kurulu yapay zekâ projesi. Görüş alanındaki, hatta
+          engellerin arkasındaki kişiyi tespit edip yerini tahmin ediyor.
+        </p>
+        <ul class="feat">
+          <li data-i18n="c2.f1">Donanım üzerinde çalışan hafif model (edge AI)</li>
+          <li data-i18n="c2.f2">Sensör/görüntü verisinden kişi tespiti</li>
+          <li data-i18n="c2.f3">Tespit edilen kişinin konumunu tahmin eder</li>
+        </ul>
+        <p class="card-links">
+          <span class="pill">ESP32</span>
+          <span class="pill">Edge AI</span>
+          <span class="pill" data-i18n="c2.p1">Görsel işleme</span>
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="tag" data-i18n="c3.tag">Masaüstü</span>
+          <span class="tag muted" data-i18n="c3.sub">Windows · Yerel ağ</span>
+        </div>
+        <h3 data-i18n="c3.title">Kerkük Üniversitesi — LAN Haberleşme & Dosya Aktarımı</h3>
+        <p data-i18n="c3.desc">
+          Kurum içindeki çalışanların aynı yerel ağ üzerinden birbirine mesaj
+          yazabildiği ve dosya gönderebildiği masaüstü uygulaması.
+        </p>
+        <ul class="feat">
+          <li data-i18n="c3.f1">Ağdaki kullanıcıları otomatik bulma ve mesajlaşma</li>
+          <li data-i18n="c3.f2">Büyük dosyaları yerel ağ üzerinden hızla gönderme</li>
+          <li data-i18n="c3.f3">İnternet çıkışı ve sunucu kurulumu gerektirmez</li>
         </ul>
         <p class="card-links">
           <span class="pill">Socket</span>
@@ -105,61 +150,45 @@
 
       <article class="card">
         <div class="card-top">
-          <span class="tag">Web</span>
-          <span class="tag muted">Harita · PHP · MySQL</span>
+          <span class="tag" data-i18n="c4.tag">Web</span>
+          <span class="tag muted" data-i18n="c4.sub">Harita · PHP · MySQL</span>
         </div>
-        <h3>Emlak Haritası — Parsel & İlan Numaraları</h3>
-        <p>
-          Emlakçılar için Google Maps tarzı harita üzerinde ilan ve parsel
-          numaralarını görmeyi sağlayan web uygulaması. Aradığı bölgeyi haritada
-          açıp numarayı okumak, tabloda kaynak aramaktan çok daha hızlı.
+        <h3 data-i18n="c4.title">Emlak Haritası — Parsel & İlan Numaraları</h3>
+        <p data-i18n="c4.desc">
+          Emlakçılar için harita üzerinde ilan ve parsel numaralarını görmeyi
+          sağlayan web uygulaması.
         </p>
         <ul class="feat">
-          <li>Harita üzerinde numaralı işaretçiler ve tıklanabilir detay</li>
-          <li>Bölgeye, numaraya ve özelliğe göre arama ve filtreleme</li>
-          <li>Veritabanından yönetilen ilan kayıtları</li>
+          <li data-i18n="c4.f1">Harita üzerinde numaralı işaretçiler ve tıklanabilir detay</li>
+          <li data-i18n="c4.f2">Bölge, numara ve özelliğe göre arama ve filtreleme</li>
+          <li data-i18n="c4.f3">Veritabanından yönetilen ilan kayıtları</li>
         </ul>
         <p class="card-links">
           <span class="pill">Leaflet</span>
           <span class="pill">OpenStreetMap</span>
           <span class="pill">Google Maps API</span>
-          <span class="pill">PHP · MySQL</span>
         </p>
       </article>
 
       <article class="card">
         <div class="card-top">
-          <span class="tag">Android</span>
+          <span class="tag" data-i18n="c5.tag">Android</span>
           <span class="tag muted">Kotlin · Jetpack Compose</span>
         </div>
-        <h3>AA Fix — Xiaomi Android Auto Sorun Giderici</h3>
-        <p>
-          MIUI/HyperOS telefonlarda Android Auto çökmesi, kopması ve
-          bağlanamaması sorunlarını tespit eden, kullanıcıyı doğru ayara
-          yönlendiren teşhis ve çözüm uygulaması.
+        <h3 data-i18n="c5.title">AA Fix — Xiaomi Android Auto Sorun Giderici</h3>
+        <p data-i18n="c5.desc">
+          MIUI/HyperOS telefonlarda Android Auto çökmesi ve bağlanamaması
+          sorunlarını tespit eden, kullanıcıyı doğru ayara yönlendiren uygulama.
         </p>
         <ul class="feat">
-          <li>Teşhis sihirbazı: 8+ kontrol, tek dokunuşla ayar ekranı</li>
-          <li>Adım adım çözüm rehberi ve ADB komut listesi</li>
-          <li>Rootsuz, izin sadık, tamamen Türkçe</li>
+          <li data-i18n="c5.f1">Teşhis sihirbazı: 8+ kontrol, tek dokunuşla ayar ekranı</li>
+          <li data-i18n="c5.f2">Adım adım çözüm rehberi ve ADB komut listesi</li>
+          <li data-i18n="c5.f3">Rootsuz, izin sadık, tamamen Türkçe</li>
         </ul>
         <p class="card-links">
           <span class="pill">Kotlin</span>
           <span class="pill">Compose</span>
-          <span class="pill">Intent sistemi</span>
-        </p>
-      </article>
-
-      <article class="card placeholder">
-        <div class="card-top"><span class="tag muted">Yakında</span></div>
-        <h3>Projene buradan yer aç</h3>
-        <p>
-          Bir sonraki projeni buraya ekle: kısa açıklama, birkaç madde ve
-          varsa mağaza/kayıt bağlantısı.
-        </p>
-        <p class="card-links">
-          <span class="pill">Ekle 1</span>
-          <span class="pill">Ekle 2</span>
+          <span class="pill">Intent</span>
         </p>
       </article>
 
@@ -168,30 +197,51 @@
 
   <!-- YETENEKLER -->
   <section id="yetenekler" class="section">
-    <h2>Yetenekler</h2>
+    <h2 data-i18n="skills.title">Yetenekler</h2>
     <ul class="skills">
-      <li><span>Socket / yerel ağ iletişimi</span><i style="--v:92%"></i></li>
-      <li><span>Kotlin / Android SDK</span><i style="--v:90%"></i></li>
-      <li><span>Node.js / backend</span><i style="--v:84%"></i></li>
-      <li><span>PHP · MySQL</span><i style="--v:82%"></i></li>
-      <li><span>Leaflet · Google Maps API</span><i style="--v:86%"></i></li>
-      <li><span>HTML · CSS · JavaScript</span><i style="--v:88%"></i></li>
-      <li><span>Git / GitHub</span><i style="--v:80%"></i></li>
+      <li><span data-i18n="s1">Yapay zekâ ajanları / otomasyon</span><i style="--v:90%"></i></li>
+      <li><span data-i18n="s2">Socket / yerel ağ iletişimi</span><i style="--v:92%"></i></li>
+      <li><span data-i18n="s3">Kotlin / Android SDK</span><i style="--v:90%"></i></li>
+      <li><span data-i18n="s4">Node.js / backend</span><i style="--v:84%"></i></li>
+      <li><span data-i18n="s5">PHP · MySQL</span><i style="--v:82%"></i></li>
+      <li><span data-i18n="s6">Leaflet · Google Maps API</span><i style="--v:86%"></i></li>
+      <li><span data-i18n="s7">HTML · CSS · JavaScript</span><i style="--v:88%"></i></li>
     </ul>
   </section>
 
   <!-- İLETİŞİM -->
   <section id="iletisim" class="section">
-    <h2>İletişim</h2>
-    <div class="grid two">
-      <div>
-        <p>Bir fikrin, bir hatan ya da bir iş birliği mi var? Yazmaktan çekinme.</p>
-        <a class="btn primary" href="mailto:1@engmumin.work.gd">1@engmumin.work.gd</a>
+    <h2 data-i18n="contact.title">İletişim</h2>
+
+    <div class="contact-grid">
+
+      <div class="contact-card primary">
+        <span class="ci">@</span>
+        <div class="cbody">
+          <span class="cl" data-i18n="contact.emailLabel">E-posta</span>
+          <a class="cv" href="mailto:1@engmumin.work.gd">1@engmumin.work.gd</a>
+          <span class="ch" data-i18n="contact.emailHint">Tıkla, posta programın açılsın</span>
+        </div>
+        <button type="button" class="mini" data-copy="1@engmumin.work.gd" data-i18n="contact.copy">Kopyala</button>
       </div>
-      <ul class="links">
-        <li><a href="tel:+9647706425337">+964 770 642 5337</a></li>
-      </ul>
+
+      <div class="contact-card">
+        <span class="ci">☎</span>
+        <div class="cbody">
+          <span class="cl" data-i18n="contact.phoneLabel">Telefon</span>
+          <a class="cv" href="tel:+9647706425337">+964 770 642 5337</a>
+          <span class="ch" data-i18n="contact.phoneHint">Dokun ve ara</span>
+        </div>
+        <button type="button" class="mini" data-copy="+9647706425337" data-i18n="contact.copy">Kopyala</button>
+      </div>
+
     </div>
+
+    <p class="contact-note" data-i18n="contact.note">
+      Bir fikrin, bir hatan ya da bir iş birliği mi var? Yukarıdaki adreslerden
+      herhangi birine yazabilirsin.
+    </p>
+    <div class="toast" id="toast" data-i18n="contact.copied">Kopyalandı ✓</div>
   </section>
 
 </main>
