@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mümin — Uygulama & Araç Geliştiricisi</title>
+<meta name="description" content="Mümin'in kişisel sitesi. Android, masaüstü ve web uygulamaları; ağ ve harita araçları.">
+<meta name="author" content="Mümin">
+
+<!-- Sosyal / önizleme -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mümin — Uygulama & Araç Geliştiricisi">
+<meta property="og:description" content="Android, masaüstü ve web uygulamaları; ağ ve harita araçları.">
+<meta property="og:url" content="https://engmumin.work.gd/">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://engmumin.work.gd/">
+
+<!-- Favicon (inline SVG, dosya gerekmez) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2310b981'/%3E%3Ctext x='50' y='68' font-size='52' font-family='sans-serif' font-weight='700' fill='%2304120d' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top">M<span>.</span></a>
+  <nav>
+    <a href="#hakkimda">Hakkımda</a>
+    <a href="#projeler">Projeler</a>
+    <a href="#yetenekler">Yetenekler</a>
+    <a href="#iletisim">İletişim</a>
+  </nav>
+  <button id="themeToggle" class="ghost" type="button" aria-label="Tema değiştir">◐</button>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="eyebrow">Merhaba, ben</p>
+    <h1>Mümin<span class="dot">.</span></h1>
+    <p class="lead">
+      Uygulama ve araç geliştiricisiyim. <strong>Android</strong>,
+      <strong>masaüstü</strong> ve <strong>web</strong> tarafında; ağ
+      iletişimi, dosya paylaşımı ve harita tabanlı iş araçları yapıyorum.
+      Bir problemi görür, çözer, sonra başkalarının da kullanabileceği bir
+      araca dönüştürürüm.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="#projeler">Projelerimi gör</a>
+      <a class="btn" href="#iletisim">İletişime geç</a>
+    </div>
+    <dl class="stats">
+      <div><dt>Yayındaki proje</dt><dd>3</dd></div>
+      <div><dt>Platform</dt><dd>3 ayrı</dd></div>
+      <div><dt>Odak</dt><dd>Araçlar</dd></div>
+    </dl>
+  </section>
+
+  <!-- HAKKIMDA -->
+  <section id="hakkimda" class="section">
+    <h2>Hakkımda</h2>
+    <div class="grid two">
+      <p>
+        Günlük işleri kolaylaştıran <strong>araçlar</strong> yapmayı seviyorum:
+        LAN üzerinde dosya gönderen bir program, haritada ilan numarasını
+        gösteren bir panel, telefonda ayarı tek dokunuşla düzelten bir uygulama…
+        Hepsi aynı meraktan doğuyor — <em>bu iş neden elle yapılıyor?</em>
+      </p>
+      <p>
+        Bir sorunu çözerken önce neden bozulduğunu anlamaya çalışırım, sonra
+        sonucu sade bir arayüze indirgerim. Kullanıcının teknik bilgisi olmasa
+        bile işini bitirebilsin isterim.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROJELER -->
+  <section id="projeler" class="section">
+    <h2>Projeler</h2>
+    <div class="cards">
+
+      <article class="card">
+        <div class="card-top">
+          <span class="tag">Masaüstü</span>
+          <span class="tag muted">Windows · Yerel ağ</span>
+        </div>
+        <h3>Kerkük Üniversitesi — LAN Haberleşme & Dosya Aktarımı</h3>
+        <p>
+          Kurum içindeki çalışanların aynı yerel ağ üzerinden birbirine mesaj
+          yazabildiği ve dosya gönderebildiği masaüstü uygulaması.
+          İnternet çıkışı olmadan, sadece LAN üzerinde çalışır.
+        </p>
+        <ul class="feat">
+          <li>Ağdaki kullanıcıları otomatik bulma ve mesajlaşma</li>
+          <li>Büyük dosyaları yerel ağ üzerinden hızla gönderme</li>
+          <li>Sunucu kurulumu ve dış ağ gerektirmez — gizlilik LAN'da kalır</li>
+        </ul>
+        <p class="card-links">
+          <span class="pill">Socket</span>
+          <span class="pill">Node.js</span>
+          <span class="pill">Windows</span>
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="tag">Web</span>
+          <span class="tag muted">Harita · PHP · MySQL</span>
+        </div>
+        <h3>Emlak Haritası — Parsel & İlan Numaraları</h3>
+        <p>
+          Emlakçılar için Google Maps tarzı harita üzerinde ilan ve parsel
+          numaralarını görmeyi sağlayan web uygulaması. Aradığı bölgeyi haritada
+          açıp numarayı okumak, tabloda kaynak aramaktan çok daha hızlı.
+        </p>
+        <ul class="feat">
+          <li>Harita üzerinde numaralı işaretçiler ve tıklanabilir detay</li>
+          <li>Bölgeye, numaraya ve özelliğe göre arama ve filtreleme</li>
+          <li>Veritabanından yönetilen ilan kayıtları</li>
+        </ul>
+        <p class="card-links">
+          <span class="pill">Leaflet</span>
+          <span class="pill">OpenStreetMap</span>
+          <span class="pill">Google Maps API</span>
+          <span class="pill">PHP · MySQL</span>
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="tag">Android</span>
+          <span class="tag muted">Kotlin · Jetpack Compose</span>
+        </div>
+        <h3>AA Fix — Xiaomi Android Auto Sorun Giderici</h3>
+        <p>
+          MIUI/HyperOS telefonlarda Android Auto çökmesi, kopması ve
+          bağlanamaması sorunlarını tespit eden, kullanıcıyı doğru ayara
+          yönlendiren teşhis ve çözüm uygulaması.
+        </p>
+        <ul class="feat">
+          <li>Teşhis sihirbazı: 8+ kontrol, tek dokunuşla ayar ekranı</li>
+          <li>Adım adım çözüm rehberi ve ADB komut listesi</li>
+          <li>Rootsuz, izin sadık, tamamen Türkçe</li>
+        </ul>
+        <p class="card-links">
+          <span class="pill">Kotlin</span>
+          <span class="pill">Compose</span>
+          <span class="pill">Intent sistemi</span>
+        </p>
+      </article>
+
+      <article class="card placeholder">
+        <div class="card-top"><span class="tag muted">Yakında</span></div>
+        <h3>Projene buradan yer aç</h3>
+        <p>
+          Bir sonraki projeni buraya ekle: kısa açıklama, birkaç madde ve
+          varsa mağaza/kayıt bağlantısı.
+        </p>
+        <p class="card-links">
+          <span class="pill">Ekle 1</span>
+          <span class="pill">Ekle 2</span>
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- YETENEKLER -->
+  <section id="yetenekler" class="section">
+    <h2>Yetenekler</h2>
+    <ul class="skills">
+      <li><span>Socket / yerel ağ iletişimi</span><i style="--v:92%"></i></li>
+      <li><span>Kotlin / Android SDK</span><i style="--v:90%"></i></li>
+      <li><span>Node.js / backend</span><i style="--v:84%"></i></li>
+      <li><span>PHP · MySQL</span><i style="--v:82%"></i></li>
+      <li><span>Leaflet · Google Maps API</span><i style="--v:86%"></i></li>
+      <li><span>HTML · CSS · JavaScript</span><i style="--v:88%"></i></li>
+      <li><span>Git / GitHub</span><i style="--v:80%"></i></li>
+    </ul>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section id="iletisim" class="section">
+    <h2>İletişim</h2>
+    <div class="grid two">
+      <div>
+        <p>Bir fikrin, bir hatan ya da bir iş birliği mi var? Yazmaktan çekinme.</p>
+        <a class="btn primary" href="mailto:ornek@engmumin.work.gd">E-posta gönder</a>
+      </div>
+      <ul class="links">
+        <li><a href="https://github.com/KULLANICI-ADIN" rel="me">GitHub</a></li>
+        <li><a href="https://play.google.com/store/apps/developer?id=HESAP" rel="me">Google Play</a></li>
+        <li><a href="https://linkedin.com/in/kullanici" rel="me">LinkedIn</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© <span id="yil"></span> Mümin · <a href="https://engmumin.work.gd">engmumin.work.gd</a></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
