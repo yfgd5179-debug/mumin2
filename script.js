@@ -26,6 +26,10 @@ const DICT = {
     "nav.contact": "İletişim",
     "ui.theme": "Tema değiştir",
     "ui.langGroup": "Dil seçimi",
+    "ui.menu": "Menüyü aç / kapat",
+    "ui.toTop": "Yukarı çık",
+    "ui.scroll": "Aşağı kaydır",
+    "ui.scrollText": "Aşağı kaydır",
 
     "hero.eyebrow": "Merhaba, ben",
     "hero.lead":
@@ -115,6 +119,10 @@ const DICT = {
     "nav.contact": "Contact",
     "ui.theme": "Toggle theme",
     "ui.langGroup": "Choose language",
+    "ui.menu": "Open / close menu",
+    "ui.toTop": "Back to top",
+    "ui.scroll": "Scroll down",
+    "ui.scrollText": "Scroll down",
 
     "hero.eyebrow": "Hello, I'm",
     "hero.lead":
@@ -204,6 +212,10 @@ const DICT = {
     "nav.contact": "التواصل",
     "ui.theme": "تبديل المظهر",
     "ui.langGroup": "اختيار اللغة",
+    "ui.menu": "فتح / إغلاق القائمة",
+    "ui.toTop": "العودة إلى الأعلى",
+    "ui.scroll": "مرّر إلى الأسفل",
+    "ui.scrollText": "مرّر إلى الأسفل",
 
     "hero.eyebrow": "مرحبًا، أنا",
     "hero.lead":
@@ -343,10 +355,20 @@ const savedTheme = localStorage.getItem(KEY);
 if (savedTheme) root.dataset.theme = savedTheme;
 else if (matchMedia("(prefers-color-scheme: light)").matches) root.dataset.theme = "light";
 
-document.getElementById("themeToggle").addEventListener("click", () => {
+const themeToggle = document.getElementById("themeToggle");
+
+function syncThemeIcon() {
+  const light = root.dataset.theme === "light";
+  themeToggle.textContent = light ? "☾" : "☀";
+  themeToggle.setAttribute("aria-pressed", light ? "true" : "false");
+}
+syncThemeIcon();
+
+themeToggle.addEventListener("click", () => {
   const next = root.dataset.theme === "light" ? "dark" : "light";
   root.dataset.theme = next;
   localStorage.setItem(KEY, next);
+  syncThemeIcon();
 });
 
 /* ---------------- kopyala ---------------- */
@@ -370,6 +392,10 @@ document.querySelectorAll("[data-copy]").forEach((btn) => {
     toast.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+
+    btn.classList.add("done");
+    clearTimeout(btn._doneTimer);
+    btn._doneTimer = setTimeout(() => btn.classList.remove("done"), 1500);
   });
 });
 
