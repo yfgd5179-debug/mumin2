@@ -432,6 +432,8 @@ html[data-theme="light"] .tone-android{--tone:#f43f5e;--tone-ink:#be123c}
 
 /* ---------- dil seçim katmanı (ilk ziyaret, yönlendirmesiz) ---------- */
 html.dil-acik,html.dil-acik body{overflow:hidden}
+/* Katman açıkken üstteki menü gizlenir: modal arkada etkileşimli olmasın */
+html.dil-acik .topbar{visibility:hidden}
 
 .dil-overlay{
   position:fixed;inset:0;z-index:200;
