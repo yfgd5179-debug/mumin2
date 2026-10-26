@@ -6,6 +6,10 @@
         og.png                  1200 x 630  (og:image / summary_large_image)
         apple-touch-icon.png     180 x 180  (iOS ana ekran ikonu)
         favicon.ico               48 + 32px (ICO kapliginda PNG)
+        icon-192.png             192 x 192  (PWA, "any" amaclı)
+        icon-512.png             512 x 512  (PWA, "any" amaclı)
+        icon-maskable-192.png    192 x 192  (PWA, maskeli - guvenli alan)
+        icon-maskable-512.png    512 x 512  (PWA, maskeli - guvenli alan)
 
     Not: Bu betik bilincli olarak yalnizca ASCII icerir; Windows PowerShell 5.1
     BOM olmayan .ps1 dosyalarini ANSI okudugu icin Turkce karakterler
@@ -162,7 +166,36 @@ function Uret-Touch([string]$yol) {
     Write-Output '  apple-touch-icon.png   180x180'
 }
 
-# ---------------- 3) favicon.ico (48 + 32) ----------------
+# ---------------- 3) PWA ikonlari (192 + 512, duz + maskeli) ----------------
+# "any"    : saydam altlik + yuvarlak yesil karo (favicon ile ayni marka)
+# "maskable": tam kanama yesil zemin, "M." guvenli alanin (%80 daire) icinde
+function Uret-PWA([string]$yol, [int]$n, [bool]$maskeli) {
+    $ar = Yeni-Tuval $n $n
+    $bmp = $ar[0]
+    $g   = $ar[1]
+
+    if ($maskeli) {
+        $g.Clear($YESIL)
+        # %80 guvenli daire icinde kalmalı: yuzde 40 font => cevre ~0.35n < 0.40n
+        $f = Yeni-Fnt 'Segoe UI' ([float]($n * 0.40)) ([System.Drawing.FontStyle]::Bold)
+        Ciz-Orta-Kutu $g 'M.' $f (Yeni-Fircat $MUREKKEP) 0 0 ([float]$n) ([float]$n)
+    }
+    else {
+        [float]$r = [int]($n * 0.24)
+        $yolK = Yeni-Yuvarlak 0.0 0.0 ([float]$n) ([float]$n) $r
+        $g.FillPath((Yeni-Fircat $YESIL), $yolK)
+        $f = Yeni-Fnt 'Segoe UI' ([float]($n * 0.50)) ([System.Drawing.FontStyle]::Bold)
+        Ciz-Orta-Kutu $g 'M.' $f (Yeni-Fircat $MUREKKEP) 0 0 ([float]$n) ([float]$n)
+    }
+
+    $bmp.Save($yol, [System.Drawing.Imaging.ImageFormat]::Png)
+    $g.Dispose()
+    $bmp.Dispose()
+    if ($maskeli) { Write-Output "  $((Split-Path -Leaf $yol))  ${n}x${n} maskable" }
+    else          { Write-Output "  $((Split-Path -Leaf $yol))  ${n}x${n}" }
+}
+
+# ---------------- 4) favicon.ico (48 + 32) ----------------
 function Uret-Favicon([string]$yol) {
     $boyutlar = @(48, 32)
     $parcalar = @()
@@ -223,4 +256,8 @@ Write-Output "Gorseller uretiliyor -> $Cikti"
 Uret-OG      (Join-Path $Cikti 'og.png')
 Uret-Touch   (Join-Path $Cikti 'apple-touch-icon.png')
 Uret-Favicon (Join-Path $Cikti 'favicon.ico')
+Uret-PWA     (Join-Path $Cikti 'icon-192.png')          192 $false
+Uret-PWA     (Join-Path $Cikti 'icon-512.png')          512 $false
+Uret-PWA     (Join-Path $Cikti 'icon-maskable-192.png') 192 $true
+Uret-PWA     (Join-Path $Cikti 'icon-maskable-512.png') 512 $true
 Write-Output 'Tamam.'

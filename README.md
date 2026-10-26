@@ -126,9 +126,45 @@ Kaç kişi giriyor, hangi dil okunuyor bilmiyorsanız **GoatCounter**
    ```
 
 Kod **boşken hiçbir analitik yüklenmez** (varsayılan budur). Kod girildiğinde
-sayfa görüntülemeleri otomatik sayılır; sağ üstteki dil düğmelerine
-basıldığında ayrıca `/?lang=xx` ziyareti olarak kaydedilir — böylece
-dil dağılımını görürsünüz.
+sayfa görüntülemeleri otomatik sayılır; dil düğmelerine **ve dil seçim
+katmanındaki** butonlara basıldığında ayrıca `/?lang=xx` ziyareti olarak
+kaydedilir — böylece dil dağılımını görürsünüz.
+
+Özel olaylar da gönderilebilir (şu an proje kartı detayı açıldığında
+`proje-detay` olayı gider):
+
+```js
+window.Mumin.olay("proje-detay", "c1-detay");   // ANALYTIK boşsa hiçbir şey yapmaz
+```
+
+## PWA — ana ekrana ekleme ve çevrimdışı
+
+Site bir **PWA** olarak çalışır: Android'de Chrome menüsünden
+*“Ana ekrana ekle”* dendiğinde uygulama gibi, kendi ikonuyla açılır ve
+**ağ olmadığında da** içerik okunur.
+
+| Dosya | Ne işe yarar |
+|---|---|
+| `site.webmanifest` | `display: standalone`, `id/scope/start_url`, 192–512 px ikonlar (`any` + `maskable`) |
+| `sw.js` | Service worker: **gezintilerde ağa öncelik** (her zaman taze HTML, olmazsa önbellek), statik varlıklarda önbellek öncelik + arka planda tazeleme; sürüm değişince eski önbellekler silinir |
+| `script.js` (sonu) | `navigator.serviceWorker.register("sw.js")` — yalnızca `http/https` üzerinde |
+| `icon-*.png` | `scripts\gorsel-uret.ps1` ile üretilir (elle değil) |
+
+Nasıl çalışır:
+
+- **HTML: ağa öncelik.** Yeni push yayınlandığında ziyaretçi hemen güncel
+  sürümü görür; yalnızca internet yoksa önbelleğe düşer.
+- **CSS/JS: önbellek öncelik + arka planda tazeleme.** `?v=` damgası
+  değişince URL de değişir, dolayısıyla önbellek kendiliğinden tazelenir.
+- **Dış originler** (ör. GoatCounter) service worker'a hiç karışmaz.
+- İlk yüklemede `/`, `/dil.html`, `/404.html` ve ikon önbelleğe alınır.
+
+Doğrulama (yerel sunucu açıkken): Chrome DevTools → *Application → Service
+Workers* “activated and running”, *Cache Storage* içinde `mumin-v1-*`,
+*Network → Offline* işaretlenip yenilendiğinde sayfa hâlâ açılıyor.
+
+> Service worker yalnızca güvenli bağlamlarda çalışır (`https://` veya
+> `localhost`). Yayın adresi `https://` olduğu için telefonda da çalışır.
 
 ## Otomatik güncelleme (git) sistemi
 
@@ -198,7 +234,7 @@ hatırladıktan sonra süreç tamamen sessiz çalışır.
 | `sitemap.xml` | 3 URL: `/`, `/?lang=en`, `/?lang=ar` — her birinde kendi kendine + karşılıklı `hreflang` |
 | `index.html` head | `hreflang` (tr/en/ar/x-default), `og:locale`, `og:image` (**1200×630**), `summary_large_image`, **JSON-LD Person** (isim, unvan, `knowsAbout`) |
 | `script.js` | `?lang=en\|ar` ile sayfa o dile açılır; dil değişince adres çubuğu **ve `canonical`** birlikte güncellenir → `hreflang` ile aynı adresler |
-| `og.png` · `favicon.ico` · `apple-touch-icon.png` · `site.webmanifest` | Paylaşım kartı, sekmelerde/ana ekranda ikon, site adı ve tema rengi |
+| `og.png` · `favicon.ico` · `apple-touch-icon.png` · `icon-*.png` · `site.webmanifest` | Paylaşım kartı, sekmelerde/ana ekranda ikon, PWA ikonları (192–512, `any` + `maskable`), site adı ve tema rengi (`display: standalone`) |
 
 ```text
 https://engmumin.work.gd/            ← Türkçe (varsayılan, x-default)
@@ -214,7 +250,8 @@ https://engmumin.work.gd/?lang=ar    ← Arapça
 
 ### Görselleri yeniden üretme
 
-`og.png`, `apple-touch-icon.png` ve `favicon.ico` tek betikten gelir — metni
+`og.png`, `apple-touch-icon.png`, `favicon.ico` ve dört PWA ikonu
+(`icon-192/512.png`, `icon-maskable-192/512.png`) tek betikten gelir — metni
 değiştirmek için betiği düzenleyin, elle Paint ile değil:
 
 ```powershell
@@ -234,9 +271,21 @@ bölüm bağlantılarıyla. GitHub Pages yanlış adreslerde otomatik gösterir.
    - yerel `href`/`src` hedefleri var mı (kırık bağlantı yok mu),
    - kullanılan her `data-i18n` anahtarı **3 dilde de** tanımlı mı,
    - `DICT.tr/en/ar` arasında eksik/fazla anahtar var mı,
+   - JS'ten çağrılan anahtarlar da kullanılmış sayılır (`durumYaz("form.done")`
+     gibi — böylece “kullanılmayan anahtar” uyarısı false-positive vermez),
    - `<title>`, `charset`, `viewport`, `lang`, yinelenen `id`, `<img alt>` denetimi,
+   - `canonical` == `og:url`, `hreflang` kümesi tam mı (tr/en/ar/x-default),
+   - `sitemap.xml` yolları gerçek dosyalara mı (**`404.html` sitemap'te olamaz**),
+   - `robots.txt` `Sitemap:` satırı kendi domainimiz mi,
+   - `og:image` dosyası depoda var mı,
+   - `site.webmanifest` geçerli mi, ikonları var mı, `display: standalone`
+     için 192 **ve** 512 px ikon tanımlı mı (PWA kurulabilirliği),
+   - `sw.js` ↔ `script.js` `serviceWorker.register` tutarlılığı,
    - ardından dosyaları yerel sunucuda açıp `/`, `/dil.html`, `/404.html`,
      `/robots.txt`, `/sitemap.xml` 200 döner mi diye bakar.
+   (Yeni kontrollerin gerçekten çalıştığı `scripts\denetle-negatif.py` ile
+   **8 negatif testte** doğrulanır — betik önce izleyicinin çalışıp
+   çalışmadığına bakar, dosyaları bayt düzeyinde geri alır.)
 2. **Lighthouse CI** — `lighthouserc.json` eşikleri:
    erişilebilirlik / SEO / iyi uygulamalar ≥ **0.9** (hata), performans ≥ 0.7 (uyarı).
    Raporlar iş akışı artifacts'inde saklanır.

@@ -537,6 +537,7 @@ document.querySelectorAll(".card-more").forEach((btn) => {
     const d = DICT[document.documentElement.lang] || DICT.tr;
     const v = d[yeni ? btn.dataset.i18nLess : btn.dataset.i18nMore];
     if (v != null) btn.textContent = v;
+    if (yeni && window.Mumin) window.Mumin.olay("proje-detay", btn.getAttribute("aria-controls"));
   });
 });
 
@@ -566,6 +567,7 @@ document.querySelectorAll(".card-more").forEach((btn) => {
   katman.querySelectorAll("[data-pick]").forEach((btn) => {
     btn.addEventListener("click", () => {
       applyLang(btn.dataset.pick);
+      analitikDilKaydi();
       if (inertVar) arkalar.forEach((el) => { el.inert = false; });
       document.documentElement.classList.remove("dil-acik");
       katman.classList.add("kapan");
@@ -862,4 +864,32 @@ if (ANALYTIK) {
   s.src = "https://gc.zgo.at/count.js";
   s.dataset.goatcounter = "https://" + ANALYTIK + ".goatcounter.com/count";
   document.head.appendChild(s);
+}
+
+/* ---------------------------------------------------------
+   Analitik olayları — Mumin.olay("proje-detay", "c2")
+   ANALYTIK boşsa ya da sayaç kütüphanesi yüklenmemişse
+   sessizce hiçbir şey yapar (varsayılan durum budur).
+   --------------------------------------------------------- */
+window.Mumin = window.Mumin || {};
+window.Mumin.olay = function (ad, etiket) {
+  if (!ANALYTIK) return;
+  try {
+    if (window.goatcounter && typeof window.goatcounter.count === "function") {
+      window.goatcounter.count({
+        path: "/olay/" + ad + (etiket ? "/" + etiket : ""),
+        title: document.title,
+        event: true,
+      });
+    }
+  } catch (_) {}
+};
+
+/* =========================================================
+   PWA — çevrimdışı kabuk (sw.js): ağa öncelik, olmazsa önbellek
+   ========================================================= */
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
 }
