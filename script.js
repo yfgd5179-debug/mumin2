@@ -28,6 +28,7 @@ const DICT = {
     "ui.langGroup": "Dil seçimi",
     "ui.menu": "Menüyü aç / kapat",
     "ui.toTop": "Yukarı çık",
+    "foot.lang": "Dil değiştir",
     "ui.scroll": "Aşağı kaydır",
     "ui.scrollText": "Aşağı kaydır",
 
@@ -121,6 +122,7 @@ const DICT = {
     "ui.langGroup": "Choose language",
     "ui.menu": "Open / close menu",
     "ui.toTop": "Back to top",
+    "foot.lang": "Change language",
     "ui.scroll": "Scroll down",
     "ui.scrollText": "Scroll down",
 
@@ -214,6 +216,7 @@ const DICT = {
     "ui.langGroup": "اختيار اللغة",
     "ui.menu": "فتح / إغلاق القائمة",
     "ui.toTop": "العودة إلى الأعلى",
+    "foot.lang": "تغيير اللغة",
     "ui.scroll": "مرّر إلى الأسفل",
     "ui.scrollText": "مرّر إلى الأسفل",
 
@@ -332,13 +335,19 @@ function applyLang(lang) {
     b.classList.toggle("on", b.dataset.lang === lang);
   });
 
-  /* Adres çubuğunu güncelle: ?lang=xx ile doğru dille paylaşılabilir */
+  /* Adres çubuğu: TR için "/", diğerleri için ?lang=xx (hreflang ile aynı adresler) */
   try {
     const u = new URL(location.href);
-    if (u.searchParams.get("lang") !== lang) {
-      u.searchParams.set("lang", lang);
-      history.replaceState(null, "", u.pathname + "?" + u.searchParams.toString() + u.hash);
+    const istenen = lang === "tr" ? null : lang;
+    const mevcut = u.searchParams.get("lang");
+    if (mevcut !== istenen) {
+      if (istenen) u.searchParams.set("lang", istenen);
+      else u.searchParams.delete("lang");
+      history.replaceState(null, "", u.pathname + u.search + u.hash);
     }
+    /* canonical her zaman sayfanın kendi adresini göstermeli (hreflang uyumu) */
+    const canon = document.querySelector('link[rel="canonical"]');
+    if (canon) canon.href = u.origin + u.pathname + u.search;
   } catch (e) {}
 
   try { localStorage.setItem("dil", lang); } catch (e) {}

@@ -1,0 +1,20 @@
+{
+  "name": "Mümin — Uygulama & Araç Geliştiricisi",
+  "short_name": "Mümin",
+  "description": "Android, masaüstü ve web uygulamaları; yapay zekâ, ağ ve harita araçları.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#0b1117",
+  "theme_color": "#0b1117",
+  "display": "browser",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

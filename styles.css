@@ -193,6 +193,12 @@ footer{
   padding:26px clamp(16px,4vw,40px);text-align:center;
   color:var(--muted);font-size:14px;
 }
+footer .foot-alt{margin-top:8px}
+footer .foot-alt a{
+  color:var(--muted);text-decoration:none;
+  border-bottom:1px dotted var(--line);
+}
+footer .foot-alt a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 
 /* ---------- RTL (Arapça) ---------- */
 html[dir="rtl"] body{font-family:"Segoe UI",Tahoma,system-ui,sans-serif}

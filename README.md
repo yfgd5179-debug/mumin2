@@ -5,20 +5,32 @@ Statik, build gerektirmeyen tek sayfalık portfolyo. HTML + CSS + JavaScript
 
 ```
 site/
-├── dil.html     # İlk açılışta görülen dil seçme sayfası
-├── index.html   # Yapı ve varsayılan (Türkçe) metinler
-├── styles.css   # Tema, düzen, RTL (Arapça) kuralları
-├── script.js    # Çeviri sözlüğü + tema + dil seçimi + kopyala
-└── CNAME        # GitHub Pages'e özel alan adı
+├── index.html            # Yapı, varsayılan (Türkçe) metinler, dil katmanı
+├── dil.html              # Ayrı dil seçme sayfası (altbilgi → "Dil değiştir")
+├── styles.css            # Tema, düzen, RTL (Arapça) kuralları
+├── script.js             # Çeviri sözlüğü + tema + dil seçimi + kopyala
+├── 404.html              # Bulunamadı sayfası (3 dil)
+├── robots.txt            # Tarama kuralları + sitemap bildirimi
+├── sitemap.xml           # 3 dil varyantı (?lang=en / ?lang=ar)
+├── og.png                # 1200×630 sosyal paylaşım görseli
+├── apple-touch-icon.png  # 180×180 dokunmatik ikon
+├── favicon.ico           # 48 + 32 px
+├── site.webmanifest      # site adı + tema rengi
+├── CNAME                 # GitHub Pages'e özel alan adı
+├── .github/workflows/    # CI: bütünlük denetimi + Lighthouse
+└── scripts/              # otomatik güncelleme, denetim, görsel üretimi
 ```
 
 ### Dil akışı
 
-1. Ziyaretçi siteye girer → `dil.html` açılır (tercih `localStorage.dil`'de yoksa).
-2. TR / EN / AR seçilir → tercih kaydedilir, `index.html`'e geçilir.
-3. Sonraki ziyaretlerde doğrudan site açılır; sağ üstteki **TR · EN · AR**
-   düğmeleriyle dil her an değiştirilebilir.
-4. Tercihi silinirse (gizli sekme dahil) seçim ekranı tekrar gelir.
+1. **İlk ziyaret:** `index.html` açılır, sayfanın üzerine **dil seçim katmanı**
+   (`#dilSec`) gelir — yönlendirme yok, ilk boyama gecikmez.
+2. TR / EN / AR seçilir → tercih `localStorage.dil`'e yazılır, katman kapanır.
+3. Sağ üstteki **TR · EN · AR** düğmeleriyle dil her an değiştirilir; adres
+   otomatik olarak `/?lang=en` gibi paylaşılabilir hâle gelir.
+4. **Ayrı sayfa:** altbilgideki **“Dil değiştir”** bağlantısı `dil.html`'i açar
+   (noindex) — seçim yapılınca `index.html?lang=xx` ile geri dönülür.
+5. Tercih silinirse (gizli sekme dahil) seçim katmanı tekrar gelir.
 
 ## İçeriği düzenleyin
 
@@ -110,20 +122,31 @@ hatırladıktan sonra süreç tamamen sessiz çalışır.
 | Dosya | Ne işe yarar |
 |---|---|
 | `robots.txt` | Tarama izinleri + `Sitemap` bildirimi |
-| `sitemap.xml` | `https://engmumin.work.gd/` için son güncelleme ve dil alternatifleri |
-| `index.html` head | `hreflang` (tr/en/ar/x-default), `og:locale`, **JSON-LD Person şeması** (isim, unvan, `sameAs`, `knowsAbout`) |
-| `script.js` | `?lang=tr\|en\|ar` ile sayfa o dile açılır; dil değişince adres çubuğu güncellenir → doğru dille paylaşılabilir |
+| `sitemap.xml` | 3 URL: `/`, `/?lang=en`, `/?lang=ar` — her birinde kendi kendine + karşılıklı `hreflang` |
+| `index.html` head | `hreflang` (tr/en/ar/x-default), `og:locale`, `og:image` (**1200×630**), `summary_large_image`, **JSON-LD Person** (isim, unvan, `knowsAbout`) |
+| `script.js` | `?lang=en\|ar` ile sayfa o dile açılır; dil değişince adres çubuğu **ve `canonical`** birlikte güncellenir → `hreflang` ile aynı adresler |
+| `og.png` · `favicon.ico` · `apple-touch-icon.png` · `site.webmanifest` | Paylaşım kartı, sekmelerde/ana ekranda ikon, site adı ve tema rengi |
 
 ```text
-https://engmumin.work.gd/?lang=ar   ← Arapça açılır
-https://engmumin.work.gd/?lang=en   ← İngilizce açılır
+https://engmumin.work.gd/            ← Türkçe (varsayılan, x-default)
+https://engmumin.work.gd/?lang=en    ← İngilizce
+https://engmumin.work.gd/?lang=ar    ← Arapça
 ```
 
 > **İlk ziyaret:** Ana sayfadan `dil.html`'e **yönlendirme yok** (yönlendirme hem ilk
 > boyayı engelliyordu hem de Google'ı `noindex` bir sayfaya gönderiyordu). Dil seçimi,
 > ana sayfanın üzerinde açılan katmanla (`#dilSec`) sorulur; seçim `localStorage`'a
-> yazılır, adres **değişmez**. Menüdeki "Dil" bağlantısı klasik seçim sayfasını
-> (`dil.html`) açmaya devam eder.
+> yazılır, adres **değişmez**. Altbilgideki “Dil değiştir” bağlantısı klasik seçim
+> sayfasını (`dil.html`) açar.
+
+### Görselleri yeniden üretme
+
+`og.png`, `apple-touch-icon.png` ve `favicon.ico` tek betikten gelir — metni
+değiştirmek için betiği düzenleyin, elle Paint ile değil:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\gorsel-uret.ps1
+```
 
 ### 404 sayfası
 

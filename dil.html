@@ -14,8 +14,8 @@
     if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
     else if (matchMedia("(prefers-color-scheme: light)").matches) document.documentElement.dataset.theme = "light";
   } catch (e) {}
-  /* Daha önce dil seçildiyse doğrudan siteye git */
-  try { if (localStorage.getItem("dil")) location.replace("index.html"); } catch (e) {}
+  /* Dil tercihi olsa bile bu sayfa acik kaliyor: altbilgideki
+     "Dil degistir" baglantisi buraya getirir, ziyaretci secer. */
 </script>
 <style>
   :root{
@@ -296,7 +296,7 @@
     document.documentElement.dir = kod === "ar" ? "rtl" : "ltr";
 
     try { localStorage.setItem("dil", kod); } catch (e) {}
-    setTimeout(function () { location.replace("index.html"); }, 420);
+    setTimeout(function () { location.replace("index.html?lang=" + kod); }, 420);
   }
 
   cards.forEach(function (c, i) {
