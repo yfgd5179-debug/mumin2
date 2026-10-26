@@ -33,6 +33,11 @@ site/
    (noindex) — seçim yapılınca `index.html?lang=xx` ile geri dönülür.
 5. Tercih silinirse (gizli sekme dahil) seçim katmanı tekrar gelir.
 
+> **Önbellek notu:** GitHub Pages dosyaları 10 dakika tarayıcı önbelleğinde tutar.
+> `styles.css` veya `script.js` değiştikten sonra `index.html` içindeki `?v=...`
+> değerini artırın (`?v=20261027` gibi) — ziyaretçi yeni sürümü anında görür,
+> `Ctrl+F5` gerekmez.
+
 ## İçeriği düzenleyin
 
 Site **3 dilde** yayında: **Türkçe / English / العربية** (sağ üstteki TR·EN·AR düğmeleri).
