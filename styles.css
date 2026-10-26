@@ -133,7 +133,7 @@ html[data-theme="light"] .btn.primary{color:#fff}
 
 /* ---------- kart kapağı + açılır detay ---------- */
 .card-cover{
-  display:block;width:100%;aspect-ratio:16/9;object-fit:cover;
+  display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;
   border-radius:14px;margin:0 0 16px;
   background:color-mix(in srgb,var(--tone) 10%,transparent);
   border:1px solid color-mix(in srgb,var(--tone) 35%,transparent);
