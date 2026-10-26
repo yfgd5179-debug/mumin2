@@ -144,6 +144,7 @@
     <div class="cards">
 
       <article class="card tone-ai">
+        <img class="card-cover" src="media/jarvis.svg" alt="" width="1200" height="675" loading="lazy" decoding="async">
         <div class="card-top">
           <span class="tag" data-i18n="c1.tag">Yapay Zekâ</span>
           <span class="tag muted" data-i18n="c1.sub">AI Agent · Masaüstü</span>
@@ -163,9 +164,20 @@
           <span class="pill">LLM</span>
           <span class="pill" data-i18n="c1.p1">Otomasyon</span>
         </p>
+        <button class="card-more" type="button" aria-expanded="false" aria-controls="c1-detay"
+                data-i18n-more="ui.more" data-i18n-less="ui.less">Detay</button>
+        <div class="card-detay" id="c1-detay" hidden>
+          <p data-i18n="c1.d0">Bir işi tek cümlede tarif edersin; Jarvis bunu uygulanabilir adımlara böler, sırayla yürütür ve sonda ne yaptığını özetler.</p>
+          <ul class="feat">
+            <li data-i18n="c1.d1">Kendi adım planını kurar, araçları sırayla kullanır</li>
+            <li data-i18n="c1.d2">Bir adım tutmazsa geri dönüp başka yolu dener</li>
+            <li data-i18n="c1.d3">Sonda ne yapıldığını kısa bir raporla verir</li>
+          </ul>
+        </div>
       </article>
 
       <article class="card tone-hw">
+        <img class="card-cover" src="media/duvar-arkasi.svg" alt="" width="1200" height="675" loading="lazy" decoding="async">
         <div class="card-top">
           <span class="tag" data-i18n="c2.tag">Yapay Zekâ + Donanım</span>
           <span class="tag muted">ESP32 · Edge AI</span>
@@ -185,9 +197,20 @@
           <span class="pill">Edge AI</span>
           <span class="pill" data-i18n="c2.p1">Görsel işleme</span>
         </p>
+        <button class="card-more" type="button" aria-expanded="false" aria-controls="c2-detay"
+                data-i18n-more="ui.more" data-i18n-less="ui.less">Detay</button>
+        <div class="card-detay" id="c2-detay" hidden>
+          <p data-i18n="c2.d0">Amaç engel arkasında ne olduğunu anlamak: sensör verisi modelden geçer, kişinin yaklaşık konumu işaretle gösterilir.</p>
+          <ul class="feat">
+            <li data-i18n="c2.d1">Sensör verisi → model → konum çıktısı</li>
+            <li data-i18n="c2.d2">Ağır hesap buluta değil, cihazın kendisine düşer</li>
+            <li data-i18n="c2.d3">Duvar gibi katı engellerin arkası da algılanır</li>
+          </ul>
+        </div>
       </article>
 
       <article class="card tone-desk">
+        <img class="card-cover" src="media/lan.svg" alt="" width="1200" height="675" loading="lazy" decoding="async">
         <div class="card-top">
           <span class="tag" data-i18n="c3.tag">Masaüstü</span>
           <span class="tag muted" data-i18n="c3.sub">Windows · Yerel ağ</span>
@@ -207,9 +230,20 @@
           <span class="pill">Node.js</span>
           <span class="pill">Windows</span>
         </p>
+        <button class="card-more" type="button" aria-expanded="false" aria-controls="c3-detay"
+                data-i18n-more="ui.more" data-i18n-less="ui.less">Detay</button>
+        <div class="card-detay" id="c3-detay" hidden>
+          <p data-i18n="c3.d0">Kurum içindeki bilgisayarlar birbirini kendiliğinden bulur; mesaj ve dosya, sunucu ya da internet kurmadan doğrudan akar.</p>
+          <ul class="feat">
+            <li data-i18n="c3.d1">Ağdaki kullanıcılar otomatik listelenir</li>
+            <li data-i18n="c3.d2">Dosyalar yerel ağ hızında gider, yükleme beklenmez</li>
+            <li data-i18n="c3.d3">Sunucu kurulumu ve internet çıkışı gerekmez</li>
+          </ul>
+        </div>
       </article>
 
       <article class="card tone-web">
+        <img class="card-cover" src="media/emlak.svg" alt="" width="1200" height="675" loading="lazy" decoding="async">
         <div class="card-top">
           <span class="tag" data-i18n="c4.tag">Web</span>
           <span class="tag muted" data-i18n="c4.sub">Harita · PHP · MySQL</span>
@@ -229,9 +263,20 @@
           <span class="pill">OpenStreetMap</span>
           <span class="pill">Google Maps API</span>
         </p>
+        <button class="card-more" type="button" aria-expanded="false" aria-controls="c4-detay"
+                data-i18n-more="ui.more" data-i18n-less="ui.less">Detay</button>
+        <div class="card-detay" id="c4-detay" hidden>
+          <p data-i18n="c4.d0">Emlakçı ilan numarasını müşteriye anlatmak zorunda kalmaz: haritada gösterir, tıklayınca kayıt bilgisi açılır.</p>
+          <ul class="feat">
+            <li data-i18n="c4.d1">İlan ve parsel numaraları aynı ekranda görünür</li>
+            <li data-i18n="c4.d2">Bölge ve numara aramasıyla kayıt saniyeler içinde bulunur</li>
+            <li data-i18n="c4.d3">Kayıtlar veritabanından yönetilir, tek tek düzenlenmez</li>
+          </ul>
+        </div>
       </article>
 
       <article class="card tone-android">
+        <img class="card-cover" src="media/aafix.svg" alt="" width="1200" height="675" loading="lazy" decoding="async">
         <div class="card-top">
           <span class="tag" data-i18n="c5.tag">Android</span>
           <span class="tag muted">Kotlin · Jetpack Compose</span>
@@ -251,6 +296,16 @@
           <span class="pill">Compose</span>
           <span class="pill">Intent</span>
         </p>
+        <button class="card-more" type="button" aria-expanded="false" aria-controls="c5-detay"
+                data-i18n-more="ui.more" data-i18n-less="ui.less">Detay</button>
+        <div class="card-detay" id="c5-detay" hidden>
+          <p data-i18n="c5.d0">Uygulama önce sorunu kendisi arar: kontrolleri sırayla yapar, hangi ayarın eksik olduğunu söyler ve o ayarın ekranına götürür.</p>
+          <ul class="feat">
+            <li data-i18n="c5.d1">Teşhis → neden → çözüm sırasıyla ilerler</li>
+            <li data-i18n="c5.d2">Her adımda tek dokunuşla doğru ayar ekranı açılır</li>
+            <li data-i18n="c5.d3">Gerekli ADB komutları kopyalanabilir şekilde listelenir</li>
+          </ul>
+        </div>
       </article>
 
     </div>

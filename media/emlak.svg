@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="m-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#06140f"/>
+      <stop offset="1" stop-color="#030a08"/>
+    </linearGradient>
+    <radialGradient id="m-glow" cx="52%" cy="44%" r="56%">
+      <stop offset="0" stop-color="#10b981" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#10b981" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#m-bg)"/>
+  <rect width="1200" height="675" fill="url(#m-glow)"/>
+
+  <!-- harita izgisi -->
+  <g stroke="#10b981" stroke-width="1.5" opacity=".18">
+    <path d="M100 0 v675 M200 0 v675 M300 0 v675 M400 0 v675 M500 0 v675 M600 0 v675 M700 0 v675 M800 0 v675 M900 0 v675 M1000 0 v675 M1100 0 v675"/>
+    <path d="M0 75 h1200 M0 150 h1200 M0 225 h1200 M0 300 h1200 M0 375 h1200 M0 450 h1200 M0 525 h1200 M0 600 h1200"/>
+  </g>
+
+  <!-- parseller -->
+  <g fill="#10b981" fill-opacity=".1" stroke="#10b981" stroke-width="3" stroke-opacity=".55">
+    <rect x="96" y="104" width="216" height="146" rx="6"/>
+    <rect x="344" y="104" width="152" height="88" rx="6"/>
+    <rect x="560" y="88" width="248" height="176" rx="6"/>
+    <rect x="856" y="136" width="184" height="120" rx="6"/>
+    <rect x="104" y="304" width="168" height="196" rx="6"/>
+    <rect x="320" y="352" width="232" height="144" rx="6"/>
+    <rect x="608" y="328" width="176" height="168" rx="6"/>
+    <rect x="848" y="344" width="224" height="176" rx="6"/>
+    <rect x="200" y="544" width="272" height="96" rx="6"/>
+    <rect x="544" y="560" width="200" height="80" rx="6"/>
+    <rect x="800" y="568" width="280" height="72" rx="6"/>
+  </g>
+
+  <!-- yol / sinir -->
+  <path d="M0 618 q160 -46 300 -74 t320 -34 q180 10 300 -46 T1200 400"
+        fill="none" stroke="#34d399" stroke-width="5" stroke-dasharray="18 16" opacity=".75"/>
+
+  <!-- arama cubugu -->
+  <g>
+    <rect x="80" y="42" width="430" height="62" rx="31" fill="#08201a" stroke="#10b981" stroke-width="4" opacity=".95"/>
+    <circle cx="126" cy="73" r="16" fill="none" stroke="#34d399" stroke-width="5"/>
+    <path d="M138 85 l16 16" stroke="#34d399" stroke-width="5" stroke-linecap="round"/>
+    <rect x="172" y="63" width="240" height="20" rx="10" fill="#10b981" opacity=".45"/>
+  </g>
+
+  <!-- ana isaret -->
+  <g>
+    <ellipse cx="638" cy="470" rx="52" ry="16" fill="#000" opacity=".35"/>
+    <path d="M638 236 c-52 0 -94 42 -94 94 0 70 94 158 94 158 s94 -88 94 -158 c0 -52 -42 -94 -94 -94z"
+          fill="#10b981"/>
+    <circle cx="638" cy="330" r="36" fill="#052e22"/>
+    <circle cx="638" cy="330" r="16" fill="#6ee7b7"/>
+  </g>
+
+  <!-- ikincil isaretler -->
+  <g fill="#34d399" opacity=".8">
+    <path d="M300 402 c-28 0 -50 22 -50 50 0 37 50 84 50 84 s50 -47 50 -84 c0 -28 -22 -50 -50 -50z"/>
+    <circle cx="300" cy="452" r="19" fill="#052e22"/>
+  </g>
+  <g fill="#34d399" opacity=".55">
+    <path d="M944 268 c-24 0 -44 20 -44 44 0 33 44 74 44 74 s44 -41 44 -74 c0 -24 -20 -44 -44 -44z"/>
+    <circle cx="944" cy="312" r="17" fill="#052e22"/>
+  </g>
+</svg>

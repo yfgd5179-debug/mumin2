@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="e-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d1406"/>
+      <stop offset="1" stop-color="#0c0904"/>
+    </linearGradient>
+    <radialGradient id="e-glow" cx="22%" cy="50%" r="55%">
+      <stop offset="0" stop-color="#f59e0b" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#e-bg)"/>
+  <rect width="1200" height="675" fill="url(#e-glow)"/>
+
+  <!-- duvar -->
+  <g stroke="#f59e0b" fill="#f59e0b" fill-opacity=".12" stroke-opacity=".55" stroke-width="2">
+    <g id="row">
+      <rect x="500" y="0" width="96" height="52"/>
+      <rect x="604" y="0" width="96" height="52"/>
+      <rect x="708" y="0" width="96" height="52"/>
+    </g>
+    <rect x="552" y="56" width="96" height="52"/>
+    <rect x="656" y="56" width="96" height="52"/>
+    <rect x="760" y="56" width="96" height="52"/>
+    <rect x="448" y="56" width="96" height="52"/>
+  </g>
+  <!-- duvar: ust satir -->
+  <g stroke="#f59e0b" fill="#f59e0b" fill-opacity=".10" stroke-opacity=".45" stroke-width="2">
+    <rect x="500" y="112" width="96" height="52"/><rect x="604" y="112" width="96" height="52"/>
+    <rect x="708" y="112" width="96" height="52"/><rect x="812" y="112" width="96" height="52"/>
+    <rect x="448" y="168" width="96" height="52"/><rect x="552" y="168" width="96" height="52"/>
+    <rect x="656" y="168" width="96" height="52"/><rect x="760" y="168" width="96" height="52"/>
+    <rect x="500" y="224" width="96" height="52"/><rect x="604" y="224" width="96" height="52"/>
+    <rect x="708" y="224" width="96" height="52"/><rect x="812" y="224" width="96" height="52"/>
+    <rect x="448" y="280" width="96" height="52"/><rect x="552" y="280" width="96" height="52"/>
+    <rect x="656" y="280" width="96" height="52"/><rect x="760" y="280" width="96" height="52"/>
+    <rect x="500" y="336" width="96" height="52"/><rect x="604" y="336" width="96" height="52"/>
+    <rect x="708" y="336" width="96" height="52"/><rect x="812" y="336" width="96" height="52"/>
+    <rect x="448" y="392" width="96" height="52"/><rect x="552" y="392" width="96" height="52"/>
+    <rect x="656" y="392" width="96" height="52"/><rect x="760" y="392" width="96" height="52"/>
+    <rect x="500" y="448" width="96" height="52"/><rect x="604" y="448" width="96" height="52"/>
+    <rect x="708" y="448" width="96" height="52"/><rect x="812" y="448" width="96" height="52"/>
+    <rect x="448" y="504" width="96" height="52"/><rect x="552" y="504" width="96" height="52"/>
+    <rect x="656" y="504" width="96" height="52"/><rect x="760" y="504" width="96" height="52"/>
+    <rect x="500" y="560" width="96" height="52"/><rect x="604" y="560" width="96" height="52"/>
+    <rect x="708" y="560" width="96" height="52"/><rect x="812" y="560" width="96" height="52"/>
+    <rect x="448" y="616" width="96" height="52"/><rect x="552" y="616" width="96" height="52"/>
+    <rect x="656" y="616" width="96" height="52"/><rect x="760" y="616" width="96" height="52"/>
+  </g>
+
+  <!-- sensor / yayin -->
+  <circle cx="215" cy="337" r="20" fill="#f59e0b"/>
+  <circle cx="215" cy="337" r="34" fill="none" stroke="#fde68a" stroke-width="3" opacity=".8"/>
+
+  <!-- dalga yayilimlari (duvarin onunde duz, arkasinda kesikli) -->
+  <g fill="none" stroke="#f59e0b" stroke-linecap="round">
+    <path d="M215 247 A90 90 0 0 1 215 427" stroke-width="4" opacity=".9"/>
+    <path d="M215 177 A160 160 0 0 1 215 497" stroke-width="3.5" opacity=".7"/>
+    <path d="M215 107 A230 230 0 0 1 215 567" stroke-width="3" opacity=".5"/>
+    <path d="M215 37 A300 300 0 0 1 215 637" stroke-width="2.5" opacity=".32"/>
+  </g>
+  <g fill="none" stroke="#fde68a" stroke-linecap="round" stroke-dasharray="14 16">
+    <path d="M400 175 A162 162 0 0 1 400 499" stroke-width="3" opacity=".6"/>
+    <path d="M470 105 A232 232 0 0 1 470 569" stroke-width="2.5" opacity=".45"/>
+    <path d="M540 37 A302 302 0 0 1 540 637" stroke-width="2" opacity=".3"/>
+  </g>
+
+  <!-- algilan kisi -->
+  <g fill="#fde68a" opacity=".92">
+    <circle cx="905" cy="262" r="46"/>
+    <path d="M838 415 q67 -80 134 0 v120 h-134z"/>
+  </g>
+
+  <!-- tespit cercevesi -->
+  <g fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round">
+    <path d="M818 250 v-42 h42"/>
+    <path d="M992 250 v-42 h-42"/>
+    <path d="M818 452 v42 h42"/>
+    <path d="M992 452 v42 h-42"/>
+  </g>
+</svg>

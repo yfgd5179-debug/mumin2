@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="a-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e0a12"/>
+      <stop offset="1" stop-color="#0c0509"/>
+    </linearGradient>
+    <radialGradient id="a-glow" cx="42%" cy="44%" r="58%">
+      <stop offset="0" stop-color="#f43f5e" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#f43f5e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#a-bg)"/>
+  <circle cx="560" cy="300" r="340" fill="url(#a-glow)"/>
+
+  <!-- telefon -->
+  <rect x="470" y="70" width="270" height="520" rx="38" fill="#12060b" stroke="#f43f5e" stroke-width="6"/>
+  <rect x="488" y="112" width="234" height="452" rx="22" fill="#f43f5e" fill-opacity=".08"/>
+  <rect x="560" y="86" width="90" height="14" rx="7" fill="#f43f5e" opacity=".7"/>
+
+  <!-- ekran: tehis listesi -->
+  <g fill="#f43f5e" opacity=".55">
+    <rect x="516" y="150" width="150" height="14" rx="7"/>
+    <rect x="516" y="200" width="182" height="14" rx="7"/>
+    <rect x="516" y="250" width="126" height="14" rx="7"/>
+  </g>
+  <g fill="none" stroke="#fda4af" stroke-width="6" stroke-linecap="round">
+    <path d="M516 186 l8 8 14 -16"/>
+    <path d="M516 236 l8 8 14 -16"/>
+    <path d="M516 286 l8 8 14 -16"/>
+  </g>
+
+  <!-- buyuk onay -->
+  <g fill="none" stroke="#fb7185" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M540 400 l44 46 l96 -104"/>
+  </g>
+  <circle cx="638" cy="418" r="104" fill="none" stroke="#f43f5e" stroke-width="4" opacity=".45"/>
+
+  <!-- dis ekran/ayar simgesi -->
+  <g opacity=".9">
+    <rect x="150" y="150" width="150" height="150" rx="26" fill="none" stroke="#fda4af" stroke-width="6"/>
+    <path d="M186 226 h78 M186 196 h78 M186 256 h50" stroke="#fda4af" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="264" cy="256" r="14" fill="#fb7185"/>
+  </g>
+  <g opacity=".8">
+    <rect x="900" y="140" width="150" height="150" rx="26" fill="none" stroke="#fda4af" stroke-width="6"/>
+    <path d="M975 176 v56 M947 204 h56" stroke="#fda4af" stroke-width="9" stroke-linecap="round"/>
+    <path d="M938 256 q37 -26 74 0" fill="none" stroke="#fda4af" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- dişli -->
+  <g stroke="#f43f5e" fill="none" stroke-linecap="round">
+    <circle cx="800" cy="530" r="78" stroke-width="18"/>
+    <circle cx="800" cy="530" r="30" stroke-width="14"/>
+    <path stroke-width="18" d="M878 530 h26 M855 585 l19 19 M800 608 v26 M745 585 l-19 19 M722 530 h-26 M745 475 l-19 -19 M800 452 v-26 M855 475 l19 -19"/>
+  </g>
+
+  <!-- adim cizgisi -->
+  <g stroke="#fb7185" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 20" opacity=".7">
+    <path d="M180 420 q140 90 300 100"/>
+  </g>
+</svg>

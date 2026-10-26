@@ -9,6 +9,7 @@ site/
 ├── dil.html              # Ayrı dil seçme sayfası (altbilgi → "Dil değiştir")
 ├── styles.css            # Tema, düzen, RTL (Arapça) kuralları
 ├── script.js             # Çeviri sözlüğü + tema + dil seçimi + kopyala
+├── media/                # Proje kartı kapakları (5 adet, metinsiz SVG)
 ├── 404.html              # Bulunamadı sayfası (3 dil)
 ├── robots.txt            # Tarama kuralları + sitemap bildirimi
 ├── sitemap.xml           # 3 dil varyantı (?lang=en / ?lang=ar)

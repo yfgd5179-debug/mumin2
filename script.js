@@ -29,6 +29,28 @@ const DICT = {
     "ui.menu": "Menüyü aç / kapat",
     "ui.toTop": "Yukarı çık",
     "foot.lang": "Dil değiştir",
+    "ui.more": "Detay",
+    "ui.less": "Gizle",
+    "c1.d0": "Bir işi tek cümlede tarif edersin; Jarvis bunu uygulanabilir adımlara böler, sırayla yürütür ve sonda ne yaptığını özetler.",
+    "c1.d1": "Kendi adım planını kurar, araçları sırayla kullanır",
+    "c1.d2": "Bir adım tutmazsa geri dönüp başka yolu dener",
+    "c1.d3": "Sonda ne yapıldığını kısa bir raporla verir",
+    "c2.d0": "Amaç engel arkasında ne olduğunu anlamak: sensör verisi modelden geçer, kişinin yaklaşık konumu işaretle gösterilir.",
+    "c2.d1": "Sensör verisi → model → konum çıktısı",
+    "c2.d2": "Ağır hesap buluta değil, cihazın kendisine düşer",
+    "c2.d3": "Duvar gibi katı engellerin arkası da algılanır",
+    "c3.d0": "Kurum içindeki bilgisayarlar birbirini kendiliğinden bulur; mesaj ve dosya, sunucu ya da internet kurmadan doğrudan akar.",
+    "c3.d1": "Ağdaki kullanıcılar otomatik listelenir",
+    "c3.d2": "Dosyalar yerel ağ hızında gider, yükleme beklenmez",
+    "c3.d3": "Sunucu kurulumu ve internet çıkışı gerekmez",
+    "c4.d0": "Emlakçı ilan numarasını müşteriye anlatmak zorunda kalmaz: haritada gösterir, tıklayınca kayıt bilgisi açılır.",
+    "c4.d1": "İlan ve parsel numaraları aynı ekranda görünür",
+    "c4.d2": "Bölge ve numara aramasıyla kayıt saniyeler içinde bulunur",
+    "c4.d3": "Kayıtlar veritabanından yönetilir, tek tek düzenlenmez",
+    "c5.d0": "Uygulama önce sorunu kendisi arar: kontrolleri sırayla yapar, hangi ayarın eksik olduğunu söyler ve o ayarın ekranına götürür.",
+    "c5.d1": "Teşhis → neden → çözüm sırasıyla ilerler",
+    "c5.d2": "Her adımda tek dokunuşla doğru ayar ekranı açılır",
+    "c5.d3": "Gerekli ADB komutları kopyalanabilir şekilde listelenir",
     "ui.scroll": "Aşağı kaydır",
     "ui.scrollText": "Aşağı kaydır",
 
@@ -123,6 +145,28 @@ const DICT = {
     "ui.menu": "Open / close menu",
     "ui.toTop": "Back to top",
     "foot.lang": "Change language",
+    "ui.more": "Details",
+    "ui.less": "Hide",
+    "c1.d0": "You describe a job in one sentence; Jarvis breaks it into doable steps, runs them in order and sums up what it did.",
+    "c1.d1": "Builds its own step plan and uses tools in order",
+    "c1.d2": "If a step fails it backtracks and tries another way",
+    "c1.d3": "Ends with a short report of what was done",
+    "c2.d0": "The goal is to know what is behind the obstacle: sensor data goes through the model and the person's approximate location is marked.",
+    "c2.d1": "Sensor data → model → location output",
+    "c2.d2": "Heavy computation runs on the device, not in the cloud",
+    "c2.d3": "Works behind solid obstacles such as walls",
+    "c3.d0": "Computers on the office network find each other automatically; messages and files flow directly, with no server or internet setup.",
+    "c3.d1": "Users on the network are listed automatically",
+    "c3.d2": "Files travel at LAN speed — no uploading",
+    "c3.d3": "No server installation and no internet connection needed",
+    "c4.d0": "No need to dictate the listing number: it is shown on the map, and a click opens the record.",
+    "c4.d1": "Listing and parcel numbers on the same screen",
+    "c4.d2": "Find a record in seconds by area or number",
+    "c4.d3": "Records are managed from the database, not edited one by one",
+    "c5.d0": "The app looks for the problem itself: it runs the checks in order, says which setting is missing and takes you to that screen.",
+    "c5.d1": "Diagnosis → cause → fix, in order",
+    "c5.d2": "One tap opens the right settings screen at every step",
+    "c5.d3": "Required ADB commands are listed, ready to copy",
     "ui.scroll": "Scroll down",
     "ui.scrollText": "Scroll down",
 
@@ -217,6 +261,28 @@ const DICT = {
     "ui.menu": "فتح / إغلاق القائمة",
     "ui.toTop": "العودة إلى الأعلى",
     "foot.lang": "تغيير اللغة",
+    "ui.more": "التفاصيل",
+    "ui.less": "إخفاء",
+    "c1.d0": "تصف المهمة بجملة واحدة؛ فيقسّمها جارفيس إلى خطوات قابلة للتنفيذ، وينفّذها بالترتيب ثم يختصر ما فعله.",
+    "c1.d1": "يبني خطة خطواته الخاصة ويستخدم الأدوات بالترتيب",
+    "c1.d2": "إذا لم تنجح خطوة يعود ويجرّب طريقًا آخر",
+    "c1.d3": "ينتهي بتقرير قصير عمّا تم",
+    "c2.d0": "الهدف معرفة ما خلف العائق: تمرّ بيانات المستشعر عبر النموذج ويُعلَّم الموقع التقريبي للشخص.",
+    "c2.d1": "بيانات المستشعر ← النموذج ← مخرجات الموقع",
+    "c2.d2": "الحساب الثقيل يتم على الجهاز نفسه لا في السحابة",
+    "c2.d3": "يعمل خلف العوائق الصلبة مثل الجدار",
+    "c3.d0": "تكتشف أجهزة الشبكة الداخلية بعضها تلقائيًا، وتجري الرسائل والملفات مباشرة دون خادم أو إنترنت.",
+    "c3.d1": "تُعرض مستخدمات الشبكة تلقائيًا",
+    "c3.d2": "تنتقل الملفات بسرعة الشبكة المحلية دون رفع",
+    "c3.d3": "لا حاجة لتثبيت خادم ولا لاتصال بالإنترنت",
+    "c4.d0": "لا حاجة لشرح رقم الإعلان للعميل: يُعرض على الخريطة، والنقر يفتح بيانات السجل.",
+    "c4.d1": "أرقام الإعلانات والقطع في الشاشة نفسها",
+    "c4.d2": "اعثر على السجل خلال ثوانٍ بالمنطقة أو الرقم",
+    "c4.d3": "تُدار السجلات من قاعدة البيانات لا يدويًا",
+    "c5.d0": "يبحث التطبيق عن المشكلة بنفسه: يشغّل الفحوص بالترتيب، ويقول أي إعداد ناقص، ويأخذك إلى شاشته.",
+    "c5.d1": "تشخيص ← سبب ← حل بالترتيب",
+    "c5.d2": "نقرة واحدة تفتح شاشة الإعداد الصحيحة في كل خطوة",
+    "c5.d3": "أوامر ADB المطلوبة معروضة وجاهزة للنسخ",
     "ui.scroll": "مرّر إلى الأسفل",
     "ui.scrollText": "مرّر إلى الأسفل",
 
@@ -325,6 +391,13 @@ function applyLang(lang) {
     });
   });
 
+  /* proje kartındaki detay düğmesi: açıkken "Gizle", kapalıyken "Detay" */
+  document.querySelectorAll("[data-i18n-more]").forEach((el) => {
+    const acik = el.getAttribute("aria-expanded") === "true";
+    const v = d[acik ? el.dataset.i18nLess : el.dataset.i18nMore];
+    if (v != null) el.textContent = v;
+  });
+
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.title = m.title;
@@ -375,6 +448,20 @@ const ILK_DIL_KAYDI = (() => {
 
 document.querySelectorAll(".lang button").forEach((b) => {
   b.addEventListener("click", () => applyLang(b.dataset.lang));
+});
+
+/* ---------------- proje kartları: detay aç / kapat ---------------- */
+document.querySelectorAll(".card-more").forEach((btn) => {
+  const panel = document.getElementById(btn.getAttribute("aria-controls"));
+  if (!panel) return;
+  btn.addEventListener("click", () => {
+    const yeni = btn.getAttribute("aria-expanded") !== "true";
+    btn.setAttribute("aria-expanded", yeni ? "true" : "false");
+    panel.hidden = !yeni;
+    const d = DICT[document.documentElement.lang] || DICT.tr;
+    const v = d[yeni ? btn.dataset.i18nLess : btn.dataset.i18nMore];
+    if (v != null) btn.textContent = v;
+  });
 });
 
 /* ---------------- ilk ziyaret: dil seçim katmanı (yönlendirmesiz) ---------------- */

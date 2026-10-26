@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="j-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#150c26"/>
+      <stop offset="1" stop-color="#0b0716"/>
+    </linearGradient>
+    <radialGradient id="j-glow" cx="50%" cy="47%" r="55%">
+      <stop offset="0" stop-color="#a855f7" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="j-line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a855f7" stop-opacity=".1"/>
+      <stop offset=".5" stop-color="#c084fc"/>
+      <stop offset="1" stop-color="#a855f7" stop-opacity=".1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#j-bg)"/>
+  <circle cx="600" cy="315" r="330" fill="url(#j-glow)"/>
+
+  <!-- odak -->
+  <g fill="none" stroke="#a855f7" stroke-linecap="round">
+    <circle cx="600" cy="315" r="270" stroke-width="2" opacity=".22"/>
+    <circle cx="600" cy="315" r="205" stroke-width="2.5" opacity=".38"/>
+    <circle cx="600" cy="315" r="145" stroke-width="3" opacity=".55"/>
+    <circle cx="600" cy="315" r="88" stroke-width="3.5" opacity=".75"/>
+  </g>
+
+  <!-- yorunge noktalari -->
+  <circle cx="805" cy="315" r="13" fill="#e9d5ff"/>
+  <circle cx="706" cy="214" r="9" fill="#a855f7"/>
+  <circle cx="470" cy="418" r="7" fill="#c084fc" opacity=".8"/>
+
+  <!-- cekirdek -->
+  <circle cx="600" cy="315" r="36" fill="#a855f7"/>
+  <circle cx="600" cy="315" r="36" fill="none" stroke="#f5e8ff" stroke-width="3" opacity=".65"/>
+  <circle cx="600" cy="315" r="14" fill="#faf5ff"/>
+
+  <!-- adim zinciri: planla -> uygula -> raporla -->
+  <g fill="none" stroke="#c084fc" stroke-width="3" opacity=".85">
+    <rect x="368" y="548" width="72" height="72" rx="16"/>
+    <rect x="564" y="548" width="72" height="72" rx="16"/>
+    <rect x="760" y="548" width="72" height="72" rx="16"/>
+  </g>
+  <g stroke="url(#j-line)" stroke-width="3" stroke-linecap="round">
+    <line x1="444" y1="584" x2="558" y2="584"/>
+    <line x1="640" y1="584" x2="754" y2="584"/>
+  </g>
+  <g fill="#e9d5ff">
+    <circle cx="404" cy="584" r="9"/>
+    <rect x="586" y="570" width="28" height="28" rx="7"/>
+    <path d="M796 570 l24 14 -24 14z"/>
+  </g>
+</svg>

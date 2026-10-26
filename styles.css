@@ -131,6 +131,33 @@ html[data-theme="light"] .btn.primary{color:#fff}
   color:var(--muted);padding:4px 10px;border-radius:999px;
 }
 
+/* ---------- kart kapağı + açılır detay ---------- */
+.card-cover{
+  display:block;width:100%;aspect-ratio:16/9;object-fit:cover;
+  border-radius:14px;margin:0 0 16px;
+  background:color-mix(in srgb,var(--tone) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--tone) 35%,transparent);
+}
+.card-more{
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  margin-top:14px;padding:8px 15px;border-radius:999px;
+  font:inherit;font-size:13.5px;font-weight:600;
+  color:var(--tone-ink);background:color-mix(in srgb,var(--tone) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--tone) 45%,transparent);
+  transition:.16s;
+}
+.card-more:hover{background:color-mix(in srgb,var(--tone) 22%,transparent)}
+.card-more::after{content:"↓";font-size:12px;opacity:.75}
+.card-more[aria-expanded="true"]::after{content:"↑"}
+.card-more:focus-visible{outline:2px solid var(--tone);outline-offset:2px}
+.card-detay{
+  margin-top:14px;padding-top:14px;
+  border-top:1px dashed color-mix(in srgb,var(--tone) 30%,var(--line));
+}
+.card-detay p{font-size:14.5px}
+.card-detay .feat{margin-bottom:0}
+.card-detay[hidden]{display:none}
+
 /* ---------- skills ---------- */
 .skills{list-style:none;padding:0;margin:0;display:grid;gap:18px;max-width:640px}
 .skills li{
