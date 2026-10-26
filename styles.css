@@ -28,6 +28,11 @@ html[data-theme="light"]{
 
 html{scroll-behavior:smooth}
 
+/* Yatay boşluk/ kaydırma olmasın: dekoratif ışıklar ekran dışına taşabilir,
+   ama sayfa asla sağa-sola kaydırılmaz (telefonda "boş ekran" sorunu). */
+html,body{overflow-x:clip}
+@supports not (overflow:clip){ html,body{overflow-x:hidden} }
+
 body{
   margin:0;
   background:var(--bg);
@@ -346,13 +351,17 @@ html[data-theme="light"] body.scrolled .topbar{box-shadow:0 12px 30px rgba(20,40
   position:absolute;z-index:-1;border-radius:50%;filter:blur(64px);
   pointer-events:none;will-change:transform;
 }
+/* Boyutlar dar ekranlarda vmax yerine vw ile sınırlandırılır (telefonda
+   vmax = ekran yüksekliğine göre büyüyüp dev bir taşmaya yol açıyordu). */
 .ho1{
-  width:46vmax;height:46vmax;inset-block-start:-18vmax;inset-inline-start:-14vmax;
+  width:min(46vmax,74vw);height:min(46vmax,74vw);
+  inset-block-start:-18vmax;inset-inline-start:-14vmax;
   background:radial-gradient(circle at 35% 35%,var(--accent),transparent 62%);
   opacity:.22;animation:drift1 30s ease-in-out infinite;
 }
 .ho2{
-  width:34vmax;height:34vmax;inset-block-start:6vmax;inset-inline-end:-16vmax;
+  width:min(34vmax,56vw);height:min(34vmax,56vw);
+  inset-block-start:6vmax;inset-inline-end:-16vmax;
   background:radial-gradient(circle at 60% 40%,var(--accent-2),transparent 62%);
   opacity:.20;animation:drift2 36s ease-in-out infinite;
 }
