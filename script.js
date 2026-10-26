@@ -78,6 +78,7 @@ const DICT = {
     "ui.scroll": "Aşağı kaydır",
     "ui.scrollText": "Aşağı kaydır",
 
+    "hero.name": "Mümin",
     "hero.eyebrow": "Merhaba, ben",
     "hero.lead":
       'Uygulama ve araç geliştiricisiyim. <strong>Android</strong>, <strong>masaüstü</strong> ve <strong>web</strong> tarafında; yapay zekâ, ağ iletişimi ve harita tabanlı iş araçları yapıyorum.',
@@ -210,6 +211,7 @@ const DICT = {
     "ui.scroll": "Scroll down",
     "ui.scrollText": "Scroll down",
 
+    "hero.name": "Mümin",
     "hero.eyebrow": "Hello, I'm",
     "hero.lead":
       'I build apps and tools. On <strong>Android</strong>, <strong>desktop</strong> and <strong>web</strong> — AI assistants, local-network communication and map-based business tools.',
@@ -342,6 +344,7 @@ const DICT = {
     "ui.scroll": "مرّر إلى الأسفل",
     "ui.scrollText": "مرّر إلى الأسفل",
 
+    "hero.name": "مؤمن",
     "hero.eyebrow": "مرحبًا، أنا",
     "hero.lead":
       'أطوّر تطبيقات وأدوات. على مستوى <strong>أندرويد</strong> و<strong>سطح المكتب</strong> و<strong>الويب</strong> — مساعد ذكاء اصطناعي، واتصال بالشبكة المحلية، وأدوات خرائط للعمل.',
