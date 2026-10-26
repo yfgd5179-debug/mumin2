@@ -60,9 +60,11 @@
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#0b1117" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f4f7fa" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="styles.css?v=20261026">
+<link rel="stylesheet" href="styles.css?v=20261027">
 </head>
 <body>
+
+<a class="skip" href="#top" data-i18n="ui.skip">İçeriğe geç</a>
 
 <div class="progress" id="progress" aria-hidden="true"></div>
 
@@ -83,7 +85,7 @@
   </nav>
 
   <div class="lang" role="group" data-i18n-attr="aria-label:ui.langGroup" aria-label="Dil seçimi">
-    <button type="button" data-lang="tr" class="on">TR</button>
+    <button type="button" data-lang="tr" class="on" aria-pressed="true">TR</button>
     <button type="button" data-lang="en">EN</button>
     <button type="button" data-lang="ar">AR</button>
   </div>
@@ -353,6 +355,44 @@
 
     </div>
 
+    <form class="form" id="iletisForm" novalidate>
+      <h3 data-i18n="form.title">Mesaj gönder</h3>
+      <p class="form-lead" data-i18n="form.lead">
+        Formu doldur; mesajın doğrudan e-posta adresime düşsün.
+      </p>
+
+      <div class="form-row">
+        <label class="field">
+          <span data-i18n="form.name">Adın</span>
+          <input type="text" name="name" autocomplete="name" required
+                 placeholder="Ad Soyad" data-i18n-attr="placeholder:form.namePh">
+        </label>
+        <label class="field">
+          <span data-i18n="form.email">E-posta</span>
+          <input type="email" name="email" autocomplete="email" required
+                 placeholder="ornek@mail.com" data-i18n-attr="placeholder:form.emailPh">
+        </label>
+      </div>
+
+      <label class="field">
+        <span data-i18n="form.message">Mesajın</span>
+        <textarea name="message" rows="5" required
+                  placeholder="Ne üzerine konuşalım?" data-i18n-attr="placeholder:form.msgPh"></textarea>
+      </label>
+
+      <!-- bal küpü: bunu dolduran robottur, insanlar göremez -->
+      <div class="hp" aria-hidden="true">
+        <label>Bu alanı boş bırakın<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn primary" type="submit" data-i18n="form.submit">Gönder</button>
+        <span class="form-alt" data-i18n="form.alt">Ya da doğrudan yaz: 1@engmumin.work.gd</span>
+      </div>
+
+      <p class="form-durum" id="fDurum" role="status" aria-live="polite"></p>
+    </form>
+
     <p class="contact-note" data-i18n="contact.note">
       Bir fikrin, bir hatan ya da bir iş birliği mi var? Yukarıdaki adreslerden
       herhangi birine yazabilirsin.
@@ -384,6 +424,6 @@
   </div>
 </div>
 
-<script src="script.js?v=20261026"></script>
+<script src="script.js?v=20261027"></script>
 </body>
 </html>

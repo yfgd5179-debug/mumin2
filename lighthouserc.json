@@ -6,7 +6,7 @@
         "http://127.0.0.1:8080/dil.html",
         "http://127.0.0.1:8080/404.html"
       ],
-      "numberOfRuns": 1,
+      "numberOfRuns": 3,
       "settings": {
         "chromeFlags": "--no-sandbox --disable-gpu --disable-dev-shm-usage"
       }

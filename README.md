@@ -68,6 +68,68 @@ Arapça seçildiğinde sayfa otomatik olarak `dir="rtl"` ile sağdan sola açıl
 Yeni kart eklemek için mevcut `<article class="card">…</article>` bloğunu
 kopyalayıp `class="card placeholder"` satırını silin.
 
+## İletişim formu (şu an bile çalışıyor)
+
+`#iletisim` bölümünde 3 dilde çalışan bir form var: ad, e-posta, mesaj.
+Doğrulama, `aria-invalid` işaretlemesi ve **bal küpü** (görünmez robot kapanı)
+JavaScript'te; durum mesajları `role="status"` alanı üzerinden okunur.
+
+`script.js` içindeki `FORM_URL` **boşken** form gönderildiğinde posta
+programınız konu + metin dolu olarak açılır (`mailto:` yedeği). Yani form
+bugünden kullanılabilir; tek yapmanız gereken gerçek uç noktayı tanımlamak.
+
+### Google Apps Script ile gerçek gönderim (ücretsiz, sınırsız)
+
+1. [script.google.com](https://script.google.com) → yeni proje → `Code.gs`
+   içine aşağıdaki kodu yapıştırın.
+2. **Dağıt → Uygulama için dağıt → Web uygulaması**:
+   - *Bu uygulamaya kimler erişebilir*: **Herkes**
+   - *Kullanım*: **Herkes**
+   - **Dağıt** → size verilen `…/exec` adresini kopyalayın.
+3. `script.js` içinde:
+
+   ```js
+   const FORM_URL = "https://script.google.com/macros/s/…/exec";
+   ```
+
+   `?v=` değerini de artırın, ziyaretçi yeni sürümü anında görsün.
+
+```javascript
+// Code.gs — veriler "Mesajlar" sayfasına düşer, size ayrıca e-posta gider
+function doPost(e) {
+  var v = JSON.parse(e.postData.contents);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName("Mesajlar") || ss.insertSheet("Mesajlar");
+  if (sh.getLastRow() === 0) {
+    sh.appendRow(["Tarih", "Ad", "E-posta", "Dil", "Sayfa", "Mesaj"]);
+  }
+  sh.appendRow([new Date(), v.ad, v.posta, v.dil, v.site, v.mesaj]);
+  MailApp.sendEmail("SIZ@gmail.com", "Site mesaji — " + v.ad,
+                    v.mesaj + "\n\n" + v.posta + " (" + v.dil + ")");
+  return ContentService.createTextOutput("ok");
+}
+```
+
+> Form `mode: "no-cors"` ile gönderildiği için tarayıcı yanıtı okuyamaz;
+> hata olup olmadığını Google Sheets'e bakarak anlarsınız.
+
+## Analitik (opsiyonel, çerezsiz)
+
+Kaç kişi giriyor, hangi dil okunuyor bilmiyorsanız **GoatCounter**
+(ücretsiz, çerez yok, AB menşeli):
+
+1. [goatcounter.com](https://goatcounter.com) → site kodu alın (örn. `mumin`)
+2. `script.js` içinde:
+
+   ```js
+   const ANALYTIK = "mumin";
+   ```
+
+Kod **boşken hiçbir analitik yüklenmez** (varsayılan budur). Kod girildiğinde
+sayfa görüntülemeleri otomatik sayılır; sağ üstteki dil düğmelerine
+basıldığında ayrıca `/?lang=xx` ziyareti olarak kaydedilir — böylece
+dil dağılımını görürsünüz.
+
 ## Otomatik güncelleme (git) sistemi
 
 Depo kökünde `scripts/` klasörü altında çalışan otomatik commit + push sistemi
@@ -76,7 +138,7 @@ gider (GitHub Pages böylece kendiliğinden yayılanır).
 
 | Dosya | Ne yapar |
 |---|---|
-| `scripts/otomatik-guncelleme.ps1` | 15 saniyede bir değişiklikleri kontrol eder; fark varsa `add -A` → `commit` → `push origin main` yapar. Log: `.git/otomatik-guncelleme.log` |
+| `scripts/otomatik-guncelleme.ps1` | **5 dakikada** bir (`-AralikSaniye` ile değiştirilebilir) değişiklikleri kontrol eder; fark varsa önce `sitemap.xml` içindeki `lastmod` tarihini bugüne çeker, sonra `add -A` → `commit` → `push origin main` yapar. Log: `.git/otomatik-guncelleme.log` |
 | `scripts/otomatik-guncelleme-baslat.cmd` | Betiği gizli pencerede çalıştırır (arka planda). |
 | `scripts/hemen-guncelle.cmd` | Bir kez çalıştırıp çıkar — acil commit + push. |
 | `scripts/baslangica-ekle.ps1` | Windows girişinde otomatik başlamasını sağlar (yönetici yetkisi gerekmez). |
@@ -87,7 +149,7 @@ gider (GitHub Pages böylece kendiliğinden yayılanır).
 ### Kullanım
 
 ```powershell
-# Sürekli çalışan arka plan modu (15 sn'de bir kontrol):
+# Sürekli çalışan arka plan modu (varsayılan 5 dakikada bir kontrol):
 powershell -ExecutionPolicy Bypass -File scripts\otomatik-guncelleme.ps1
 
 # Bir kez çalıştır:
@@ -97,8 +159,13 @@ powershell -ExecutionPolicy Bypass -File scripts\otomatik-guncelleme.ps1 -TekGec
 powershell -ExecutionPolicy Bypass -File scripts\baslangica-ekle.ps1
 ```
 
-Parametreler: `-AralikSaniye 30` (kontrol aralığı), `-ElleMesaj "metin"`
-(commit mesajı), `-TekGecis` (tek seferlik).
+Parametreler: `-AralikSaniye 300` (kontrol aralığı, varsayılan 300 sn = 5 dk),
+`-ElleMesaj "metin"` (commit mesajı), `-TekGecis` (tek seferlik).
+
+> **Neden 5 dakika?** 15 saniyede bir commit, 20 dakikada ~80 commit üretiyor;
+> commit geçmişi okunmaz hâle geliyor ve GitHub Pages build'leri üst üste
+> biniyor (biri `cancelled` olarak görünüyor). 5 dakika hem yeterince hızlı
+> hem de geçmişi temiz tutuyor.
 
 ### Kurulum kontrolü
 

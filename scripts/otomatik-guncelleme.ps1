@@ -13,7 +13,7 @@
 
 [CmdletBinding()]
 param(
-    [int]    $AralikSaniye = 15,     # kac saniyede bir kontrol edilsin
+    [int]    $AralikSaniye = 300,    # kac saniyede bir kontrol edilsin (5 dakika)
     [string] $ElleMesaj    = "",     # bos birakilirsa zaman damgali otomatik mesaj
     [int]    $PushDeneme   = 3,      # push basarisiz olursa kac deneme
     [switch] $TekGecis                      # sadece bir kez calis
@@ -57,6 +57,20 @@ function DegisiklikVarMi {
 
 function OtomatikGuncelle {
     if (-not (DegisiklikVarMi)) { return $false }
+
+    # sitemap.xml son guncelleme tarihini bugune cek (sadece tarih farkliysa
+    # yine de bir dosya degisikligi olusur; boylece Google tarihi gorur)
+    $sm = Join-Path $Repo 'sitemap.xml'
+    if (Test-Path -LiteralPath $sm) {
+        try {
+            $t   = [System.IO.File]::ReadAllText($sm)
+            $bugun = Get-Date -Format 'yyyy-MM-dd'
+            $yeni = [regex]::Replace($t, '<lastmod>\d{4}-\d{2}-\d{2}</lastmod>', '<lastmod>' + $bugun + '</lastmod>')
+            if ($yeni -cne $t) {
+                [System.IO.File]::WriteAllText($sm, $yeni, (New-Object System.Text.UTF8Encoding($false)))
+            }
+        } catch { Kaydet "HATA sitemap lastmod: $($_.Exception.Message)" }
+    }
 
     $ekle = GitCalistir @('add', '-A', '--', '.')
     if ($ekle.Kod -ne 0) { Kaydet "HATA add: $($ekle.Metin)"; return $false }

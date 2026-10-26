@@ -17,6 +17,14 @@ const META = {
   },
 };
 
+/* ---- Dış hizmet uç noktaları (nasıl kurulacağı: README) ----
+     FORM_URL : Google Apps Script Web App adresi. Boş bırakılırsa form
+                gönderildiğinde posta programı doldurulup açılır (mailto yedeği).
+     ANALYTIK : GoatCounter site kodu (goatcounter.com). Boş bırakılırsa
+                hiçbir analitik yüklenmez — varsayılan durum budur.        */
+const FORM_URL = "";
+const ANALYTIK = "";
+
 const DICT = {
   /* ---------------- TÜRKÇE ---------------- */
   tr: {
@@ -28,6 +36,7 @@ const DICT = {
     "ui.langGroup": "Dil seçimi",
     "ui.menu": "Menüyü aç / kapat",
     "ui.toTop": "Yukarı çık",
+    "ui.skip": "İçeriğe geç",
     "foot.lang": "Dil değiştir",
     "ui.more": "Detay",
     "ui.less": "Gizle",
@@ -51,6 +60,21 @@ const DICT = {
     "c5.d1": "Teşhis → neden → çözüm sırasıyla ilerler",
     "c5.d2": "Her adımda tek dokunuşla doğru ayar ekranı açılır",
     "c5.d3": "Gerekli ADB komutları kopyalanabilir şekilde listelenir",
+    "form.title": "Mesaj gönder",
+    "form.lead": "Formu doldur; mesajın doğrudan e-posta adresime düşsün.",
+    "form.name": "Adın",
+    "form.namePh": "Ad Soyad",
+    "form.email": "E-posta",
+    "form.emailPh": "ornek@mail.com",
+    "form.message": "Mesajın",
+    "form.msgPh": "Ne üzerine konuşalım?",
+    "form.submit": "Gönder",
+    "form.alt": "Ya da doğrudan yaz: 1@engmumin.work.gd",
+    "form.sending": "Gönderiliyor…",
+    "form.done": "Mesajın iletildi, teşekkürler ✓",
+    "form.err": "Lütfen alanları kontrol et: ad, e-posta ve mesaj.",
+    "form.fail": "Gönderilemedi — doğrudan e-posta yazabilirsin.",
+    "form.mailto": "Posta programın açıldı; mesajı oradan gönderebilirsin.",
     "ui.scroll": "Aşağı kaydır",
     "ui.scrollText": "Aşağı kaydır",
 
@@ -144,6 +168,7 @@ const DICT = {
     "ui.langGroup": "Choose language",
     "ui.menu": "Open / close menu",
     "ui.toTop": "Back to top",
+    "ui.skip": "Skip to content",
     "foot.lang": "Change language",
     "ui.more": "Details",
     "ui.less": "Hide",
@@ -167,6 +192,21 @@ const DICT = {
     "c5.d1": "Diagnosis → cause → fix, in order",
     "c5.d2": "One tap opens the right settings screen at every step",
     "c5.d3": "Required ADB commands are listed, ready to copy",
+    "form.title": "Send a message",
+    "form.lead": "Fill in the form and the message goes straight to my inbox.",
+    "form.name": "Your name",
+    "form.namePh": "Full name",
+    "form.email": "Email",
+    "form.emailPh": "you@example.com",
+    "form.message": "Your message",
+    "form.msgPh": "What should we talk about?",
+    "form.submit": "Send",
+    "form.alt": "Or write directly: 1@engmumin.work.gd",
+    "form.sending": "Sending…",
+    "form.done": "Message delivered, thank you ✓",
+    "form.err": "Please check the fields: name, email and message.",
+    "form.fail": "Could not send — feel free to email instead.",
+    "form.mailto": "Your mail app opened; send it from there.",
     "ui.scroll": "Scroll down",
     "ui.scrollText": "Scroll down",
 
@@ -260,6 +300,7 @@ const DICT = {
     "ui.langGroup": "اختيار اللغة",
     "ui.menu": "فتح / إغلاق القائمة",
     "ui.toTop": "العودة إلى الأعلى",
+    "ui.skip": "تخطَّ إلى المحتوى",
     "foot.lang": "تغيير اللغة",
     "ui.more": "التفاصيل",
     "ui.less": "إخفاء",
@@ -283,6 +324,21 @@ const DICT = {
     "c5.d1": "تشخيص ← سبب ← حل بالترتيب",
     "c5.d2": "نقرة واحدة تفتح شاشة الإعداد الصحيحة في كل خطوة",
     "c5.d3": "أوامر ADB المطلوبة معروضة وجاهزة للنسخ",
+    "form.title": "أرسل رسالة",
+    "form.lead": "املأ النموذج وتصلك الرسالة مباشرة في بريدي.",
+    "form.name": "اسمك",
+    "form.namePh": "الاسم الكامل",
+    "form.email": "البريد الإلكتروني",
+    "form.emailPh": "name@example.com",
+    "form.message": "رسالتك",
+    "form.msgPh": "بماذا نتحدث؟",
+    "form.submit": "إرسال",
+    "form.alt": "أو راسلني مباشرة: 1@engmumin.work.gd",
+    "form.sending": "جارٍ الإرسال…",
+    "form.done": "تم إرسال رسالتك، شكرًا لك ✓",
+    "form.err": "يرجى التحقق من الحقول: الاسم والبريد والرسالة.",
+    "form.fail": "تعذّر الإرسال — يمكنك المراسلة بالبريد مباشرة.",
+    "form.mailto": "تم فتح تطبيق البريد لديك؛ أرسلها من هناك.",
     "ui.scroll": "مرّر إلى الأسفل",
     "ui.scrollText": "مرّر إلى الأسفل",
 
@@ -405,7 +461,9 @@ function applyLang(lang) {
   if (meta) meta.content = m.desc;
 
   document.querySelectorAll(".lang button").forEach((b) => {
-    b.classList.toggle("on", b.dataset.lang === lang);
+    const secili = b.dataset.lang === lang;
+    b.classList.toggle("on", secili);
+    b.setAttribute("aria-pressed", secili ? "true" : "false");
   });
 
   /* Adres çubuğu: TR için "/", diğerleri için ?lang=xx (hreflang ile aynı adresler) */
@@ -447,8 +505,23 @@ const ILK_DIL_KAYDI = (() => {
 })();
 
 document.querySelectorAll(".lang button").forEach((b) => {
-  b.addEventListener("click", () => applyLang(b.dataset.lang));
+  b.addEventListener("click", () => {
+    applyLang(b.dataset.lang);
+    analitikDilKaydi();
+  });
 });
+
+/* Dil değişince ziyareti ayrı bir sayfa gibi kaydet (analitik açıksa) */
+function analitikDilKaydi() {
+  try {
+    if (window.goatcounter && typeof window.goatcounter.count === "function") {
+      window.goatcounter.count({
+        path: location.pathname + location.search,
+        title: document.title,
+      });
+    }
+  } catch (_) {}
+}
 
 /* ---------------- proje kartları: detay aç / kapat ---------------- */
 document.querySelectorAll(".card-more").forEach((btn) => {
@@ -472,8 +545,15 @@ document.querySelectorAll(".card-more").forEach((btn) => {
   /* Seçim zaten yapılmışsa (kayıt veya açılışta gelen ?lang=) katman hiç açılmasın */
   if ((ILK_DIL_KAYDI && DICT[ILK_DIL_KAYDI]) || (URL_LANG && DICT[URL_LANG])) return;
 
+  /* Katman açıkken arkadaki içerik odaklanamaz (aria-modal'ın gerçek karşılığı) */
+  const arkalar = ["header", "main", "footer"]
+    .map((s) => document.querySelector(s))
+    .filter(Boolean);
+  const inertVar = typeof HTMLElement !== "undefined" && "inert" in HTMLElement.prototype;
+
   katman.hidden = false;
   document.documentElement.classList.add("dil-acik");
+  if (inertVar) arkalar.forEach((el) => { el.inert = true; });
 
   const ilk = katman.querySelector("[data-pick]");
   if (ilk) {
@@ -483,6 +563,7 @@ document.querySelectorAll(".card-more").forEach((btn) => {
   katman.querySelectorAll("[data-pick]").forEach((btn) => {
     btn.addEventListener("click", () => {
       applyLang(btn.dataset.pick);
+      if (inertVar) arkalar.forEach((el) => { el.inert = false; });
       document.documentElement.classList.remove("dil-acik");
       katman.classList.add("kapan");
       setTimeout(() => { katman.hidden = true; }, 240);
@@ -583,7 +664,7 @@ function countUp(el) {
 /* ---------- görünüre girince açılan öğeler ---------- */
 (function reveals() {
   const sel =
-    ".section h2, .grid.two > p, .card, .skills, .contact-card, .contact-note, .scroll-hint";
+    ".section h2, .grid.two > p, .card, .skills, .contact-card, .contact-note, .scroll-hint, .form";
   const els = [...document.querySelectorAll(sel)];
 
   const sayac = new Map();
@@ -684,3 +765,98 @@ function countUp(el) {
     if (!topbar.contains(e.target)) kapat();
   });
 })();
+
+/* =========================================================
+   İletişim formu
+   ========================================================= */
+(function iletisimFormu() {
+  const form = document.getElementById("iletisForm");
+  if (!form) return;
+  const durum = document.getElementById("fDurum");
+  const btn = form.querySelector('[type="submit"]');
+
+  function durumYaz(kod, tip) {
+    if (!durum) return;
+    const d = DICT[document.documentElement.lang] || DICT.tr;
+    durum.textContent = d[kod] || "";
+    durum.className = "form-durum" + (tip ? " " + tip : "");
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const ad = form.elements.name.value.trim();
+    const posta = form.elements.email.value.trim();
+    const mesaj = form.elements.message.value.trim();
+    const bal = form.elements.website ? form.elements.website.value.trim() : "";
+
+    /* bal küpü doluysa bot gönderilmiştir: sessizce "gönderildi" de */
+    if (bal) {
+      form.reset();
+      durumYaz("form.done", "ok");
+      return;
+    }
+
+    const hatalar = [];
+    if (ad.length < 2) hatalar.push(form.elements.name);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(posta)) hatalar.push(form.elements.email);
+    if (mesaj.length < 5) hatalar.push(form.elements.message);
+
+    form.querySelectorAll("input,textarea").forEach((el) => el.removeAttribute("aria-invalid"));
+    if (hatalar.length) {
+      hatalar.forEach((el) => el.setAttribute("aria-invalid", "true"));
+      try { hatalar[0].focus(); } catch (_) {}
+      durumYaz("form.err", "hata");
+      return;
+    }
+
+    btn.disabled = true;
+    durumYaz("form.sending");
+
+    /* Uç nokta tanımlı değilse: posta programını doldurup aç (çalışan yol) */
+    if (!FORM_URL) {
+      const govde =
+        "Ad: " + ad + "\nE-posta: " + posta +
+        "\nDil: " + document.documentElement.lang + "\n\n" + mesaj;
+      window.location.href =
+        "mailto:1@engmumin.work.gd?subject=" +
+        encodeURIComponent("engmumin.work.gd — " + ad) +
+        "&body=" + encodeURIComponent(govde);
+      btn.disabled = false;
+      durumYaz("form.mailto", "ok");
+      return;
+    }
+
+    try {
+      await fetch(FORM_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          ad: ad,
+          posta: posta,
+          mesaj: mesaj,
+          site: location.href,
+          dil: document.documentElement.lang,
+        }),
+      });
+      form.reset();
+      durumYaz("form.done", "ok");
+    } catch (_) {
+      durumYaz("form.fail", "hata");
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+
+/* =========================================================
+   Analitik — yalnızca ANALYTIK kodu doldurulmuşsa yüklenir
+   ========================================================= */
+if (ANALYTIK) {
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://gc.zgo.at/count.js";
+  s.dataset.goatcounter = "https://" + ANALYTIK + ".goatcounter.com/count";
+  document.head.appendChild(s);
+}
