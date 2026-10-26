@@ -300,9 +300,18 @@ Yerelde de aynı denetimi çalıştırabilirsiniz:
 python scripts\denetle.py
 ```
 
-> **Öneri (elle yapılacak tek adım):** Repo → *Settings → Branches* → `main` için
+> **Dal koruması AÇIK.** Repo → *Settings → Branches* → `main` için
 > *"Require status checks to pass before merging"* → `Depo bütünlüğü` ve
-> `Lighthouse denetimi` işaretleyin. Böylece hatalı push doğrudan engellenir.
+> `Lighthouse denetimi` işaretli (`strict` kapalı, yöneticiler dahil).
+>
+> - Başkası PR açtığında / kolaboratör eklendiğinde bu iki iş geçmeden
+>   birleştirme **imkânsız** — hatalı sürüm yayınlanamaz.
+> - Kuvvetli push ve dal silme **kapalı** (geçmişi bozamazsınız).
+> - **Otomatik güncelleme sistemi etkilenmez:** push'u depo sahibi (yönetici)
+>   yaptığı için GitHub kuralı *bypass* eder; log'da şu satır görülür:
+>   `Bypassed rule violations for refs/heads/main - 2 of 2 required status
+>   checks are expected`. İzleyicinin 300 sn aralığı, CI süresinden (~140 sn)
+>   uzun olduğu için zaten nadiren de olsa beklemesi gerekmez.
 
 ## Yerelde önizleme
 
