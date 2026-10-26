@@ -24,6 +24,11 @@ jobs:
       - name: Yerel bağlantılar + çeviri anahtarları
         run: python scripts/denetle.py
 
+      # Denetimin kendisi de ölmesin diye: dosyaları bozup beklenen hatayı
+      # gören 8 negatif senaryo (sonra dosyalar bayt düzeyinde geri alınır).
+      - name: Negatif denetim testleri
+        run: python scripts/denetle-negatif.py
+
       - name: Yayındaki dosyalar erişilebilir mi?
         run: |
           python -m http.server 8080 --bind 127.0.0.1 >/dev/null 2>&1 &
