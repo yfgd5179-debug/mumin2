@@ -886,15 +886,16 @@ window.Mumin.olay = function (ad, etiket) {
 };
 
 /* =========================================================
-   Yatay kayma koruması (özellikle RTL/Arapça mod):overflow-x: clip
-   devreye girmezse (eski CSS önbelleği, farklı tarayıcı) sayfa
-   sağa-sola kayarsa anında başa alınır. Normal koşulda hiç tetiklenmez.
+   Yatay kayma koruması (özellikle RTL/Arapça mod): scrollX her zaman
+   0 = doğru başlangıç demektir (RTL'de negatif değer = sola kayma ve
+   boş alan görünmesi). Delta ile başa alınır; overflow-x: clip
+   devredeyken bu hiç tetiklenmez.
    ========================================================= */
 addEventListener(
   "scroll",
   function () {
-    const k = document.scrollingElement || document.documentElement;
-    if (k.scrollLeft) k.scrollLeft = 0;
+    const x = window.scrollX;
+    if (Math.abs(x) >= 1) window.scrollBy({ left: -x, top: 0, behavior: "instant" });
   },
   { passive: true }
 );
