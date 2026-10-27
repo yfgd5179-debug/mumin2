@@ -74,9 +74,10 @@ kopyalayıp `class="card placeholder"` satırını silin.
 Doğrulama, `aria-invalid` işaretlemesi ve **bal küpü** (görünmez robot kapanı)
 JavaScript'te; durum mesajları `role="status"` alanı üzerinden okunur.
 
-`script.js` içindeki `FORM_URL` **boşken** form gönderildiğinde posta
-programınız konu + metin dolu olarak açılır (`mailto:` yedeği). Yani form
-bugünden kullanılabilir; tek yapmanız gereken gerçek uç noktayı tanımlamak.
+`script.js` içindeki `FORM_URL` **tanımlı** → form gönderildiğinde mesaj
+**Google Apps Script** üzerinden kutunuza düşer **ve** “Mesajlar” tablosuna
+yazılır (aşağıdaki kurulum bölümü). `FORM_URL` boşaltılırsa otomatik olarak
+`mailto:` yedeği devreye girer; yani form hiçbir koşulda çalışmaz kalmaz.
 
 ### Google Apps Script ile gerçek gönderim (ücretsiz)
 
@@ -125,10 +126,11 @@ Kaç kişi giriyor, hangi dil okunuyor bilmiyorsanız **GoatCounter**
    const ANALYTIK = "mumin";
    ```
 
-Kod **boşken hiçbir analitik yüklenmez** (varsayılan budur). Kod girildiğinde
-sayfa görüntülemeleri otomatik sayılır; dil düğmelerine **ve dil seçim
-katmanındaki** butonlara basıldığında ayrıca `/?lang=xx` ziyareti olarak
-kaydedilir — böylece dil dağılımını görürsünüz.
+Kod **boşken hiçbir analitik yüklenmez** (varsayılan budur). Şu an kod
+**dolu** — `ANALYTIK = "engmumin"` → sayfa görüntülemeleri otomatik
+sayılır; dil düğmelerine **ve dil seçim katmanındaki** butonlara
+basıldığında ayrıca `/?lang=xx` ziyareti olarak kaydedilir — böylece dil
+dağılımını görürsünüz. Panel: `https://engmumin.goatcounter.com`
 
 Özel olaylar da gönderilebilir (şu an proje kartı detayı açıldığında
 `proje-detay` olayı gider):
