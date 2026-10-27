@@ -886,6 +886,20 @@ window.Mumin.olay = function (ad, etiket) {
 };
 
 /* =========================================================
+   Yatay kayma koruması (özellikle RTL/Arapça mod):overflow-x: clip
+   devreye girmezse (eski CSS önbelleği, farklı tarayıcı) sayfa
+   sağa-sola kayarsa anında başa alınır. Normal koşulda hiç tetiklenmez.
+   ========================================================= */
+addEventListener(
+  "scroll",
+  function () {
+    const k = document.scrollingElement || document.documentElement;
+    if (k.scrollLeft) k.scrollLeft = 0;
+  },
+  { passive: true }
+);
+
+/* =========================================================
    PWA — çevrimdışı kabuk (sw.js): ağa öncelik, olmazsa önbellek
    ========================================================= */
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
