@@ -34,10 +34,9 @@ html{
 
 /* Yatay boşluk/ kaydırma olmasın: dekoratif ışıklar ekran dışına taşabilir,
    ama sayfa asla sağa-sola kaydırılmaz (telefonda "boş ekran" sorunu).
-   RTL'de (Arapça) içerik sola taşar ve o yön kaydırılabilir olduğundan üç
-   ayrı katman kullanıyoruz: clip (CSS), touch-action (parmak kaydırması)
-   ve script.js'teki scroll koruması. */
-html,body{overflow-x:clip;overscroll-behavior-x:none;touch-action:pan-y}
+   clip göremeyen tarayıcılar @supports ile hidden'a düşer; son katman
+   script.js'teki scroll korumasıdır (RTL'de scrollX 0 = doğru orijin). */
+html,body{overflow-x:clip;overscroll-behavior-x:none}
 @supports not (overflow:clip){ html,body{overflow-x:hidden} }
 
 body{
