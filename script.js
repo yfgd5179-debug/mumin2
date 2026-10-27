@@ -23,7 +23,7 @@ const META = {
      ANALYTIK : GoatCounter site kodu (goatcounter.com). Boş bırakılırsa
                 hiçbir analitik yüklenmez — varsayılan durum budur.        */
 const FORM_URL = "";
-const ANALYTIK = "";
+const ANALYTIK = "engmumin";
 
 const DICT = {
   /* ---------------- TÜRKÇE ---------------- */
