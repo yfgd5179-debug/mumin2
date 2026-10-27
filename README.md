@@ -54,6 +54,14 @@ olarak durur. Yeni bir metin eklemek için:
 
 Arapça seçildiğinde sayfa otomatik olarak `dir="rtl"` ile sağdan sola açılır.
 
+Yatay boşluk/ kaydırma üç katmanla kapanır: `html,body{overflow-x:clip}`
+(desteklemeyen tarayıcılar `@supports` ile `hidden`'a düşer), dekoratif
+ışık taşmaları `min()` ile sınırlı, **bal küpü** (`class="hp"`) ekranda
+0px taşma yapar — `left:-9999px`RTL'de tam 10.000px'lik kaydırılabilir
+boşluk açıyor ve yalnızca Arapça modunda "boş ekran"a yol açıyordu.
+Son katman `script.js`'teki scroll korumasıdır: `window.scrollX` 0'dan
+saparsa (RTL'de negatif = sola kayma) anında başa alır.
+
 ### `index.html` içindeki değişilecek noktalar
 
 | Ne | Nerede |
