@@ -22,7 +22,7 @@ const META = {
                 gönderildiğinde posta programı doldurulup açılır (mailto yedeği).
      ANALYTIK : GoatCounter site kodu (goatcounter.com). Boş bırakılırsa
                 hiçbir analitik yüklenmez — varsayılan durum budur.        */
-const FORM_URL = "";
+const FORM_URL = "https://script.google.com/macros/s/AKfycbwTO6Vt9Kqj6xuNdjlb8yWj9JPeSJv7VU-FQK_RgFEM-atQeVEo8XszaAEPCk0bFuLS9w/exec";
 const ANALYTIK = "engmumin";
 
 const DICT = {
