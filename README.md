@@ -78,40 +78,40 @@ JavaScript'te; durum mesajları `role="status"` alanı üzerinden okunur.
 programınız konu + metin dolu olarak açılır (`mailto:` yedeği). Yani form
 bugünden kullanılabilir; tek yapmanız gereken gerçek uç noktayı tanımlamak.
 
-### Google Apps Script ile gerçek gönderim (ücretsiz, sınırsız)
+### Google Apps Script ile gerçek gönderim (ücretsiz)
 
-1. [script.google.com](https://script.google.com) → yeni proje → `Code.gs`
-   içine aşağıdaki kodu yapıştırın.
-2. **Dağıt → Uygulama için dağıt → Web uygulaması**:
+Kod hazır: **`scripts/apps-script-iletisim.gs`** — hatalı
+`getActiveSpreadsheet()` yerine tabloyu kendiliğinden kurar, alan
+doğrulaması, hız sınırı ve "Yanıtla" bağlantısı (`replyTo`) içerir.
+
+1. [script.google.com](https://script.google.com) → **Yeni proje** →
+   `Code.gs` içine dosyanın **tamamını** yapıştırın.
+2. En üstteki `ALICI` satırına mesajların düşeceği adresi yazın.
+3. Düzenleyicide **`kur` fonksiyonunu bir kez Çalıştır** ile çalıştırın
+   (ilk kez yetki sorar) → Drive'ınızda “engmumin.work.gd — mesajlar”
+   tablosu oluşur.
+4. **Dağıt → Uygulama için dağıt → Web uygulaması**:
    - *Bu uygulamaya kimler erişebilir*: **Herkes**
    - *Kullanım*: **Herkes**
    - **Dağıt** → size verilen `…/exec` adresini kopyalayın.
-3. `script.js` içinde:
+5. `script.js` içinde:
 
    ```js
    const FORM_URL = "https://script.google.com/macros/s/…/exec";
    ```
 
-   `?v=` değerini de artırın, ziyaretçi yeni sürümü anında görsün.
+   Ardından `?v=` damgasını artırın (otomatik izleyici bunu zaten yapar).
 
-```javascript
-// Code.gs — veriler "Mesajlar" sayfasına düşer, size ayrıca e-posta gider
-function doPost(e) {
-  var v = JSON.parse(e.postData.contents);
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sh = ss.getSheetByName("Mesajlar") || ss.insertSheet("Mesajlar");
-  if (sh.getLastRow() === 0) {
-    sh.appendRow(["Tarih", "Ad", "E-posta", "Dil", "Sayfa", "Mesaj"]);
-  }
-  sh.appendRow([new Date(), v.ad, v.posta, v.dil, v.site, v.mesaj]);
-  MailApp.sendEmail("SIZ@gmail.com", "Site mesaji — " + v.ad,
-                    v.mesaj + "\n\n" + v.posta + " (" + v.dil + ")");
-  return ContentService.createTextOutput("ok");
-}
-```
+Kurulumun doğruluğu: `…/exec` adresini tarayıcıda açın, şu yanıtı
+görmelisiniz — `{"ok":true,"mesaj":"iletişim uç noktası çalışıyor"}`.
+Sonra formu siteden doldurup gönderin; hem tabloya düşmeli hem e-posta
+gelmeli.
 
-> Form `mode: "no-cors"` ile gönderildiği için tarayıcı yanıtı okuyamaz;
-> hata olup olmadığını Google Sheets'e bakarak anlarsınız.
+> Form `mode: "no-cors"` ile gönderildiği için tarayıcı gövdeyi okuyamaz;
+> hataları Google Apps Script’in **Genel kayıtlar** panelinden görürsünüz.
+> Ücretsiz kotalar: **MailApp 100 e-posta/gün**, tablo kaydı sınırsız.
+> Kod değiştirdiğinizde yeni bir dağıtım sürümü oluşturmanız gerekir
+> (eski `…/exec` adresi çalışmaya devam eder).
 
 ## Analitik (opsiyonel, çerezsiz)
 
